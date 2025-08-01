@@ -1,0 +1,27 @@
+[workspace]
+authors = ["bwernest <ernest.laprelleboucher@gmail.com>"]
+channels = ["conda-forge"]
+name = "BlipWanker"
+platforms = ["win-64"]
+version = "0.1.0"
+
+[tasks]
+go = "python main.py"
+format = "autopep8 --in-place --recursive ./"
+test = "pytest tests"
+print_test = "pytest -s tests"
+get_cover = "coverage run -m pytest tests"
+show_cover = "coverage html"
+coverage = {depends-on = ["get_cover", "show_cover"]}
+
+[dependencies]
+# Python
+python = "3.13.*"
+matplotlib = "*"
+numpy = "*"
+
+# Development
+autopep8 = "*"
+coverage = "*"
+tqdm = "*"
+pytest = "*"
