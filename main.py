@@ -5,13 +5,8 @@ from engine.simulation import *
 
 """___Execution_____________________________________________________________"""
 
-dico = {"1.0": False, "1.1": True}
-grid = BaerDict(dico)
+dico = {"1.0": True, "1.1": True, "1.2": True}
+game = JeuDeLaVie(dico)
 
-print(list(dico.values()))
-print(list(grid.values()))
-
-print()
-
-print(list(dico.values()).count(False))
-print(list(grid.values()).count(False))
+game.simulate(50)
+game.display()
