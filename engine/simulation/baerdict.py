@@ -20,3 +20,15 @@ class BaerDict(dict):
         except KeyError:
             self.grid[key] = False
             return False
+
+    def __len__(self):
+        return self.grid.__len__()
+
+    def keys(self):
+        return self.grid.keys()
+
+    def values(self):
+        return self.grid.values()
+
+    def items(self):
+        return self.grid.items()

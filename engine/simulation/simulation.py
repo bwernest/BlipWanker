@@ -14,18 +14,44 @@ class JeuDeLaVie():
 
     def __init__(self, grid: Dict = {}):
         self.grid = BaerDict(grid)
+        self.generation: int = 0
+    
+    def __repr__(self) -> str:
+        data = {
+            "generation": self.generation,
+            "cells": len(self.grid),
+            "alive": self.live_cells,
+            "dead": self.dead_cells,
+        }
+        render = "JeuDeLaVie"
+        for key, value in data.items():
+            render += f"\n{key} =\t{value}"
+        return render
 
-    def simulate(self, turn: int):
+    @property
+    def cells(self) -> int:
+        return len(self.grid)
+
+    @property
+    def live_cells(self) -> int:
+        return list(self.grid.values()).count(True)
+    
+    @property
+    def dead_cells(self) -> int:
+        return list(self.grid.values()).count(False)
+
+    def simulate(self, turn: int = 1):
         for _ in range(turn): self.next()
 
     def next(self):
-        next_grid = {}
+        next_grid = BaerDict()
 
         for key, cell in self.grid.items():
             if not cell: continue
             self.update_life(key)
 
         self.grid = deepcopy(next_grid)
+        self.generation += 1
     
     def update_life(self, key: str) -> None:
         coords = self.get_coords(key)
