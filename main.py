@@ -1,12 +1,13 @@
 """___Modules_______________________________________________________________"""
 
 # BlipWanker
+from engine import data
 from engine.simulation import *
 
 """___Execution_____________________________________________________________"""
 
-dico = {"1.0": True, "1.1": True, "1.2": True}
+dico = data.pentadecathlon
 game = JeuDeLaVie(dico)
 
-game.simulate(50)
+game.simulate(20, debug=False, display=True)
 game.display()

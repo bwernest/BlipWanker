@@ -3,6 +3,9 @@
 # BlipWanker
 from engine.simulation.simulation import JeuDeLaVie
 
+# Python
+import numpy as np
+
 """___Functions_____________________________________________________________"""
 
 
@@ -21,3 +24,48 @@ def test_fill() -> None:
     assert simu.cells == 2
     assert simu.live_cells == 1
     assert simu.dead_cells == 1
+
+
+def test_get_coords() -> None:
+    simu = JeuDeLaVie()
+    quiz = {
+        "1.1": (1, 1),
+        "1.0": (1, 0),
+        "-1.1": (-1, 1),
+        "-1.-1": (-1, -1),
+        "-1492.1515": (-1492, 1515),
+    }
+    for key, value in quiz.items():
+        assert simu.get_coords(key) == value
+
+
+def test_get_key() -> None:
+    simu = JeuDeLaVie()
+    quiz = {
+        "1.1": (1, 1),
+        "1.0": (1, 0),
+        "-1.1": (-1, 1),
+        "-1.-1": (-1, -1),
+        "-1492.1515": (-1492, 1515),
+    }
+    for key, value in quiz.items():
+        assert simu.get_key(value) == key
+
+
+def test_around() -> None:
+    simu = JeuDeLaVie()
+    coords = (0, 0)
+    around = simu.get_around(coords)
+    expected = np.array(
+        [
+            [0, 1],
+            [1, 1],
+            [1, 0],
+            [1, -1],
+            [0, -1],
+            [-1, -1],
+            [-1, 0],
+            [-1, 1],
+        ]
+    )
+    assert np.array_equal(around, expected)

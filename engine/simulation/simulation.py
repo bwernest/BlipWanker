@@ -42,9 +42,20 @@ class JeuDeLaVie():
     def dead_cells(self) -> int:
         return list(self.grid.values()).count(False)
 
-    def simulate(self, turn: int = 1):
-        for _ in range(turn):
-            self.next()
+    def simulate(self, turn: int = 1, debug: bool = False, display: bool = False):
+        if debug:
+            for _ in range(turn):
+                print(f"Generation {self.generation}")
+                print(self.get_matrix())
+                print("\n")
+                self.next()
+        elif display:
+            for _ in range(turn):
+                self.display()
+                self.next()
+        else:
+            for _ in range(turn):
+                self.next()
 
     def next(self):
         next_grid = BaerDict()
@@ -78,22 +89,26 @@ class JeuDeLaVie():
         alives = [self.grid[self.get_key(coords)] for coords in around]
         return True if alives.count(True) == 3 else False
 
-    def display(self) -> None:
+    def get_matrix(self) -> np.ndarray:
         minX, maxX, minY, maxY = 0, 0, 1, 1
-        for cell in self.grid.keys():
-            coords = self.get_coords(cell)
-            minX = min(minX, coords[0])
-            maxX = max(maxX, coords[0])
-            minY = min(minY, coords[1])
-            maxY = max(maxY, coords[1])
+        for cell, state in self.grid.items():
+            if state:
+                coords = self.get_coords(cell)
+                minX = min(minX, coords[0])
+                maxX = max(maxX, coords[0])
+                minY = min(minY, coords[1])
+                maxY = max(maxY, coords[1])
 
-        grille = np.zeros(shape=(maxX-minX+1, maxY-minY+1))
+        grille = np.zeros(shape=(maxY-minY+1, maxX-minX+1))
 
         for cell, state in self.grid.items():
             if state:
                 coords = self.get_coords(cell)
-                grille[coords[0], coords[1]] = 1
+                grille[maxY-coords[1], coords[0]-minX] = 1
+        return grille
 
+    def display(self) -> None:
+        grille = self.get_matrix()
         plt.imshow(grille, cmap='inferno', interpolation='nearest')
         plt.axis('off')  # Masquer les axes
         plt.show()
