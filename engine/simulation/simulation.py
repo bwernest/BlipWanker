@@ -1,13 +1,15 @@
 """___Modules_______________________________________________________________"""
 
 # BlipWanker
-from typing import Dict, List, Tuple
-import numpy as np
-from matplotlib import pyplot as plt
-from copy import deepcopy
 from .baerdict import BaerDict
+from toolbox import *
 
 # Python
+from copy import deepcopy
+from matplotlib import pyplot as plt
+import numpy as np
+from tqdm import tqdm
+from typing import Dict, List, Tuple
 
 """___Classes_______________________________________________________________"""
 
@@ -54,25 +56,30 @@ class JeuDeLaVie():
                 self.display()
                 self.next()
         else:
-            for _ in range(turn):
+            for _ in tqdm(range(turn)):
                 self.next()
 
     def next(self):
-        next_grid = BaerDict()
+        next_grid = deepcopy(BaerDict())
+        count = [0, 0]
 
         cells = list(self.grid.keys())
         states = list(self.grid.values())
         for cell, state in zip(cells, states):
+            count[0] += 1
             if not state:
                 continue
-            next_grid[cell] = self.update_life(cell)
+            if self.update_life(cell):
+                next_grid[cell] = True
 
         cells = list(self.grid.keys())
         states = list(self.grid.values())
         for cell, state in zip(cells, states):
+            count[1] += 1
             if state:
                 continue
-            next_grid[cell] = self.update_dead(cell)
+            if self.update_dead(cell):
+                next_grid[cell] = True
 
         self.grid = deepcopy(next_grid)
         self.generation += 1
@@ -99,12 +106,12 @@ class JeuDeLaVie():
                 minY = min(minY, coords[1])
                 maxY = max(maxY, coords[1])
 
-        grille = np.zeros(shape=(maxY-minY+1, maxX-minX+1))
+        grille = np.zeros(shape=(maxY - minY + 1, maxX - minX + 1))
 
         for cell, state in self.grid.items():
             if state:
                 coords = self.get_coords(cell)
-                grille[maxY-coords[1], coords[0]-minX] = 1
+                grille[maxY - coords[1], coords[0] - minX] = 1
         return grille
 
     def display(self) -> None:
@@ -122,12 +129,12 @@ class JeuDeLaVie():
 
     def get_around(self, coords: Tuple[int, int]) -> np.ndarray:
         around = np.ndarray((8, 2), dtype=int)
-        around[0] = [coords[0],   coords[1]+1]
-        around[1] = [coords[0]+1, coords[1]+1]
-        around[2] = [coords[0]+1, coords[1]]
-        around[3] = [coords[0]+1, coords[1]-1]
-        around[4] = [coords[0],   coords[1]-1]
-        around[5] = [coords[0]-1, coords[1]-1]
-        around[6] = [coords[0]-1, coords[1]]
-        around[7] = [coords[0]-1, coords[1]+1]
+        around[0] = [coords[0], coords[1] + 1]
+        around[1] = [coords[0] + 1, coords[1] + 1]
+        around[2] = [coords[0] + 1, coords[1]]
+        around[3] = [coords[0] + 1, coords[1] - 1]
+        around[4] = [coords[0], coords[1] - 1]
+        around[5] = [coords[0] - 1, coords[1] - 1]
+        around[6] = [coords[0] - 1, coords[1]]
+        around[7] = [coords[0] - 1, coords[1] + 1]
         return around

@@ -23,7 +23,7 @@ class BaerDict(dict):
             return False
 
     def __setitem__(self, key, value):
-        return self.grid.__setitem__(key, value)
+        self.grid.__setitem__(key, value)
 
     def __len__(self):
         return self.grid.__len__()

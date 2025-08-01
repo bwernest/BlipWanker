@@ -8,14 +8,12 @@ import numpy as np
 
 """___Functions_____________________________________________________________"""
 
-
 def test_empty() -> None:
     simu = JeuDeLaVie()
     assert simu.grid == {}
     assert simu.cells == 0
     assert simu.live_cells == 0
     assert simu.dead_cells == 0
-
 
 def test_fill() -> None:
     dico = {"1.0": False, "1.1": True}
@@ -24,7 +22,6 @@ def test_fill() -> None:
     assert simu.cells == 2
     assert simu.live_cells == 1
     assert simu.dead_cells == 1
-
 
 def test_get_coords() -> None:
     simu = JeuDeLaVie()
@@ -38,7 +35,6 @@ def test_get_coords() -> None:
     for key, value in quiz.items():
         assert simu.get_coords(key) == value
 
-
 def test_get_key() -> None:
     simu = JeuDeLaVie()
     quiz = {
@@ -50,7 +46,6 @@ def test_get_key() -> None:
     }
     for key, value in quiz.items():
         assert simu.get_key(value) == key
-
 
 def test_around() -> None:
     simu = JeuDeLaVie()
