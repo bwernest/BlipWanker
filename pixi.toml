@@ -8,9 +8,9 @@ version = "0.1.0"
 [tasks]
 go = "python main.py"
 format = "autopep8 --in-place --recursive ./"
-test = "pytest tests"
-print_test = "pytest -s tests"
-get_cover = "coverage run -m pytest tests"
+test = "pytest test"
+print_test = "pytest -s test"
+get_cover = "coverage run -m pytest test"
 show_cover = "coverage html"
 coverage = {depends-on = ["get_cover", "show_cover"]}
 

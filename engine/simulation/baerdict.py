@@ -8,7 +8,7 @@ from typing import Dict, List
 
 class BaerDict(dict):
 
-    def __init__(self, grid: Dict):
+    def __init__(self, grid: Dict = {}):
         self.grid = grid
     
     def __repr__(self):
