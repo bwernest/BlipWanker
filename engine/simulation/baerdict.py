@@ -8,9 +8,9 @@ from typing import Dict, List
 
 class BaerDict(dict):
 
-    def __init__(self, grid: Dict = {}):
-        self.grid = grid
-
+    def __init__(self, grid: Dict = None):
+        self.grid = grid if grid is not None else {}
+    
     def __repr__(self):
         return self.grid.__repr__()
 

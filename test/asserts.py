@@ -1,0 +1,30 @@
+"""___Functions_____________________________________________________________"""
+
+def assertEqual(arg1: any, arg2: any, error_msg: str = None) -> None:
+    error_msg = error_msg if error_msg is not None else f"Arguments inégaux ! {arg1} / {arg2}"
+    assert arg1 == arg2, error_msg
+
+def assertNotEqual(arg1: any, arg2: any) -> None:
+    assert arg1 != arg2, f"Arguments égaux ! {arg1} / {arg2}"
+
+def assertTrue(arg1: bool) -> None:
+    assert arg1, f"C'est faux."
+
+def assertFalse(arg1: bool) -> None:
+    assert not arg1, f"C'est vrai."
+
+def assertIsInstance(arg1: any, _type: type) -> None:
+    assert isinstance(arg1, _type), f"Argument est de type {type(arg1)} et non de type {_type}"
+
+def assertListIsInstance(arg1: any, _type: type) -> None:
+    for elem in arg1:
+        assertIsInstance(elem, _type)
+
+def assertListEqual(arg1: any, arg2: any) -> None:
+    for elem1, elem2 in zip(arg1, arg2):
+        assertEqual(elem1, elem2)
+
+def assertDictEqual(arg1: dict, arg2: dict) -> None:
+    assertEqual(len(list(arg1.keys())), len(list(arg2.keys())), "Longeurs de dictionnaires différentes !")
+    for key, value in arg1.items():
+        assertEqual(arg1[key], arg2[key])

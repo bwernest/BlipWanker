@@ -1,7 +1,9 @@
 """___Modules_______________________________________________________________"""
 
 # BlipWanker
+from engine import data
 from engine.simulation.simulation import JeuDeLaVie
+from test.asserts import *
 
 # Python
 import numpy as np
@@ -10,18 +12,18 @@ import numpy as np
 
 def test_empty() -> None:
     simu = JeuDeLaVie()
-    assert simu.grid == {}
-    assert simu.cells == 0
-    assert simu.live_cells == 0
-    assert simu.dead_cells == 0
+    assertEqual(simu.grid, {})
+    assertEqual(simu.cells, 0)
+    assertEqual(simu.live_cells, 0)
+    assertEqual(simu.dead_cells, 0)
 
 def test_fill() -> None:
     dico = {"1.0": False, "1.1": True}
     simu = JeuDeLaVie(dico)
-    assert simu.grid.grid == dico
-    assert simu.cells == 2
-    assert simu.live_cells == 1
-    assert simu.dead_cells == 1
+    assertDictEqual(simu.grid.grid, dico)
+    assertEqual(simu.cells, 2)
+    assertEqual(simu.live_cells, 1)
+    assertEqual(simu.dead_cells, 1)
 
 def test_get_coords() -> None:
     simu = JeuDeLaVie()
@@ -33,7 +35,7 @@ def test_get_coords() -> None:
         "-1492.1515": (-1492, 1515),
     }
     for key, value in quiz.items():
-        assert simu.get_coords(key) == value
+        assertEqual(simu.get_coords(key), value)
 
 def test_get_key() -> None:
     simu = JeuDeLaVie()
@@ -45,7 +47,7 @@ def test_get_key() -> None:
         "-1492.1515": (-1492, 1515),
     }
     for key, value in quiz.items():
-        assert simu.get_key(value) == key
+        assertEqual(simu.get_key(value), key)
 
 def test_around() -> None:
     simu = JeuDeLaVie()
@@ -63,4 +65,38 @@ def test_around() -> None:
             [-1, 1],
         ]
     )
-    assert np.array_equal(around, expected)
+    assertTrue(np.array_equal(around, expected))
+
+def test_repr() -> None:
+    simu = JeuDeLaVie({"0.0": False, "1.0": True})
+    assertIsInstance(repr(simu), str)
+
+def test_update_life1() -> None:
+    simu = JeuDeLaVie({"0.0": True, "1.0": True, "0.1": True})
+    assertTrue(simu.update_life("0.0"))
+
+def test_update_life2() -> None:
+    simu = JeuDeLaVie({"0.0": True})
+    assertFalse(simu.update_life("0.0"))
+
+def test_update_dead1() -> None:
+    simu = JeuDeLaVie({"1.0": True, "1.1": True, "0.1": True})
+    assertTrue(simu.update_life("0.0"))
+
+def test_update_dead2() -> None:
+    simu = JeuDeLaVie()
+    assertFalse(simu.update_life("0.0"))
+
+def test_compact() -> None:
+    simu = JeuDeLaVie({"0.0": True, "1.0": False})
+    simu.compact()
+    assertDictEqual(simu.grid.grid, {"0.0": True})
+
+def test_case1() -> None:
+    simu = JeuDeLaVie(data.bar)
+    simu.next()
+    simu.compact()
+    assertDictEqual(simu.grid.grid, {"0.-1": True, "0.0": True, "0.1": True})
+    simu.next()
+    simu.compact()
+    assertDictEqual(simu.grid.grid, data.bar)

@@ -15,8 +15,8 @@ from typing import Dict, List, Tuple
 
 class JeuDeLaVie():
 
-    def __init__(self, grid: Dict = {}):
-        self.grid = BaerDict(grid)
+    def __init__(self, grid: Dict = None):
+        self.grid = BaerDict(grid) if grid is not None else BaerDict()
         self.generation: int = 0
 
     def __repr__(self) -> str:
@@ -118,6 +118,13 @@ class JeuDeLaVie():
         plt.imshow(grille, cmap='inferno', interpolation='nearest')
         plt.axis('off')  # Masquer les axes
         plt.show()
+
+    def compact(self) -> None:
+        compact_grid = BaerDict()
+        for cell, state in self.grid.items():
+            if state:
+                compact_grid[cell] = True
+        self.grid = deepcopy(compact_grid)
 
     def get_coords(self, key: str) -> Tuple[int, int]:
         coords = key.split(".")
