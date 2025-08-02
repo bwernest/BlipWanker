@@ -2,17 +2,21 @@
 
 # BlipWanker
 from engine.data import Data
+from engine.generator.generator import Generator
 from engine.simulation import *
 from test.asserts import *
 from toolbox import *
 
+# Python
+import numpy as np
+
 """___Execution_____________________________________________________________"""
 
-simu1 = JeuDeLaVie(Data.BAR())
-simu2 = JeuDeLaVie(Data.BAR())
-simu1.next()
-simu1.next()
-simu2.simulate(2)
-assertEqual(simu1, simu2)
-simu1.next()
-assertNotEqual(simu1, simu2)
+gen = Generator()
+
+print(gen.binary_list)
+
+for k in range(1, 6) :
+    gen.generate_binaries(k)
+
+print(gen.binary_list)
