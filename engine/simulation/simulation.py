@@ -18,7 +18,7 @@ class JeuDeLaVie():
     def __init__(self, grid: Dict = None):
         self.grid = BaerDict(grid) if grid is not None else BaerDict()
         self.generation: int = 0
-    
+
     def __eq__(self, game: "JeuDeLaVie") -> bool:
         return self.grid == game.grid and self.generation == game.generation
 
@@ -49,34 +49,24 @@ class JeuDeLaVie():
     def dead_cells(self) -> int:
         return list(self.grid.values()).count(False)
 
-    def simulate(self, turn: int = 1, debug: bool = False, display: bool = False):
-        if debug:
-            for _ in range(turn):
-                print(f"Generation {self.generation}")
-                print(self.get_matrix())
-                print("\n")
-                self.next()
-        elif display:
-            for _ in range(turn):
-                self.display()
-                self.next()
-        else:
-            for _ in tqdm(range(turn)):
-                self.next()
+    def simulate(self, turn: int = 1, bar: bool = False):
+        self.compact()
+        for _ in tqdm(range(turn), disable=not bar):
+            self.next()
 
     def next(self):
         next_grid = deepcopy(BaerDict())
         count = [0, 0]
 
+        # Live
         cells = list(self.grid.keys())
         states = list(self.grid.values())
         for cell, state in zip(cells, states):
             count[0] += 1
-            if not state:
-                continue
             if self.update_life(cell):
                 next_grid[cell] = True
 
+        # Dead
         cells = list(self.grid.keys())
         states = list(self.grid.values())
         for cell, state in zip(cells, states):

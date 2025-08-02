@@ -10,6 +10,14 @@ def test_init() -> None:
     baer = BaerDict()
     assertDictEqual(baer, {})
 
+def test_eq() -> None:
+    dico = {"oui": "non"}
+    baer1 = BaerDict(dico)
+    baer2 = BaerDict(dico)
+    assertEqual(baer1, baer2)
+    baer1["lol": "mdr"]
+    assertNotEqual(baer1, baer2)
+
 def test_import() -> None:
     dico = {"mdr": 5}
     baer = BaerDict(dico)

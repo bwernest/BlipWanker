@@ -110,3 +110,8 @@ def test_case2() -> None:
     assertEqual(simu1, simu2)
     simu1.next()
     assertNotEqual(simu1, simu2)
+
+def test_case3() -> None:
+    simu = JeuDeLaVie(Data.OSCILLATOR())
+    simu.simulate(3)
+    assertEqual(simu.grid.grid, Data.OSCILLATOR())
