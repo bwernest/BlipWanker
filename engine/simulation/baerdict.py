@@ -6,7 +6,6 @@ from typing import Dict, List
 
 """___Classes_______________________________________________________________"""
 
-
 class BaerDict(dict):
 
     def __init__(self, grid: Dict = {}):

@@ -13,7 +13,6 @@ from typing import Dict, List, Tuple
 
 """___Classes_______________________________________________________________"""
 
-
 class JeuDeLaVie():
 
     def __init__(self, grid: Dict = {}):
