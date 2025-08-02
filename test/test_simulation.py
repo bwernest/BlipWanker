@@ -12,7 +12,7 @@ import numpy as np
 
 def test_empty() -> None:
     simu = JeuDeLaVie()
-    assertEqual(simu.grid, {})
+    assertEqual(simu.grid.grid, {})
     assertEqual(simu.cells, 0)
     assertEqual(simu.live_cells, 0)
     assertEqual(simu.dead_cells, 0)
@@ -100,3 +100,13 @@ def test_case1() -> None:
     simu.next()
     simu.compact()
     assertDictEqual(simu.grid.grid, Data.BAR())
+
+def test_case2() -> None:
+    simu1 = JeuDeLaVie(Data.BAR())
+    simu2 = JeuDeLaVie(Data.BAR())
+    simu1.next()
+    simu1.next()
+    simu2.simulate(2)
+    assertEqual(simu1, simu2)
+    simu1.next()
+    assertNotEqual(simu1, simu2)

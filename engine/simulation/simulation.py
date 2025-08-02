@@ -18,6 +18,12 @@ class JeuDeLaVie():
     def __init__(self, grid: Dict = None):
         self.grid = BaerDict(grid) if grid is not None else BaerDict()
         self.generation: int = 0
+    
+    def __eq__(self, game: "JeuDeLaVie") -> bool:
+        return self.grid == game.grid and self.generation == game.generation
+
+    def __ne__(self, game: "JeuDeLaVie") -> bool:
+        return not self.__eq__(game)
 
     def __repr__(self) -> str:
         data = {

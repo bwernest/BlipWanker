@@ -27,6 +27,12 @@ class BaerDict(dict):
     def __len__(self):
         return self.grid.__len__()
 
+    def __eq__(self, baer: "BaerDict") -> bool:
+        return self.grid == baer.grid
+
+    def __ne__(self, baer: "BaerDict") -> bool:
+        return not self.__eq__(baer)
+
     def keys(self):
         return self.grid.keys()
 

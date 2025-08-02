@@ -16,6 +16,7 @@ class Data(Enum):
     BAR = bar
     OSCILLATOR = oscillator
     PENTADECATHLON = pentadecathlon
+    PLANEUR = planeur
     SQUARE = square
 
     def __call__(self) -> dict:
