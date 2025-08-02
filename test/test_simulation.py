@@ -1,7 +1,7 @@
 """___Modules_______________________________________________________________"""
 
 # BlipWanker
-from engine import data
+from engine.data import Data
 from engine.simulation.simulation import JeuDeLaVie
 from test.asserts import *
 
@@ -93,10 +93,10 @@ def test_compact() -> None:
     assertDictEqual(simu.grid.grid, {"0.0": True})
 
 def test_case1() -> None:
-    simu = JeuDeLaVie(data.bar)
+    simu = JeuDeLaVie(Data.BAR())
     simu.next()
     simu.compact()
     assertDictEqual(simu.grid.grid, {"0.-1": True, "0.0": True, "0.1": True})
     simu.next()
     simu.compact()
-    assertDictEqual(simu.grid.grid, data.bar)
+    assertDictEqual(simu.grid.grid, Data.BAR())

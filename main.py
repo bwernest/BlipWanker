@@ -1,16 +1,18 @@
 """___Modules_______________________________________________________________"""
 
 # BlipWanker
-from engine import data
+from engine.data import Data
 from engine.simulation import *
 from toolbox import *
 
 """___Execution_____________________________________________________________"""
 
-dico = data.planeur
-game = JeuDeLaVie(dico)
-
-game.simulate(500, debug=False, display=False)
-game.display()
-
-# print_info("Grille finale", game.grid.grid)
+simu = JeuDeLaVie(Data.BAR())
+simu.next()
+simu.compact()
+assert simu.grid.grid == {"0.-1": True, "0.0": True, "0.1": True}
+simu.next()
+simu.compact()
+print(simu.grid.grid)
+print(Data.BAR())
+assert simu.grid.grid == Data.BAR()
