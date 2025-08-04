@@ -25,6 +25,7 @@ def assertListEqual(arg1: any, arg2: any) -> None:
         assertEqual(elem1, elem2)
 
 def assertDictEqual(arg1: dict, arg2: dict) -> None:
-    assertEqual(len(list(arg1.keys())), len(list(arg2.keys())), "Longeurs de dictionnaires différentes !")
+    len1, len2 = len(list(arg1.keys())), len(list(arg2.keys()))
+    assertEqual(len1, len2, f"Longeurs de dictionnaires différentes ! {len1} / {len2}")
     for key, value in arg1.items():
         assertEqual(arg1[key], arg2[key])

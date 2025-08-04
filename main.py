@@ -2,7 +2,7 @@
 
 # BlipWanker
 from engine.data import Data
-from engine.generator.generator import Generator
+from engine.engine import Engine
 from engine.simulation import *
 from test.asserts import *
 from toolbox import *
@@ -12,11 +12,8 @@ import numpy as np
 
 """___Execution_____________________________________________________________"""
 
-gen = Generator()
+engine = Engine()
+engine.void()
+engine.start()
+engine.run()
 
-print(gen.binary_list)
-
-for k in range(1, 6) :
-    gen.generate_binaries(k)
-
-print(gen.binary_list)

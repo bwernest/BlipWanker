@@ -15,6 +15,11 @@ def to_base10(number: str) -> int:
     else :
         return eval(number[0])*2**(len(number)-1) + to_base10(number[1:])
 
+def super_eval(number: str) -> int:
+    while number.startswith("0"):
+        number = number[1:]
+    return eval(number)
+
 def print_info(text: str, objet: any) -> None:
     render = f"{text} :"
     if isinstance(objet, (int, float, str)):
@@ -27,3 +32,24 @@ def print_info(text: str, objet: any) -> None:
 def write_txt(path: str, text: str, extension: str = "txt") -> None:
     with open(f"{path}.{extension}", "w") as txt:
         txt.write(text)
+
+def read_txt(path: str, extension: str = "txt") -> list[str]:
+    with open(f"{path}.{extension}", "r") as txt:
+        data = txt.readlines()
+    return data
+
+def get_dict_text(dico: dict) -> str:
+    text = []
+    for key, value in dico.items():
+        text.append(f"{key}={value}")
+    return "\n".join(text)
+
+def binary_to_game_data(binary: str, dimension: int) -> dict:
+    game_save = {}
+    binary = "0"*(dimension**2-len(binary))+binary
+    for s, state in enumerate(binary):
+        if state == "1":
+            X = (s % dimension)
+            Y = -(s // dimension)
+            game_save[f"{X}.{Y}"] = "True"
+    return game_save
