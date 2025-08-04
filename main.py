@@ -12,8 +12,8 @@ import numpy as np
 
 """___Execution_____________________________________________________________"""
 
-engine = Engine()
-engine.void()
+engine = Engine(void=True)
 engine.start()
 engine.run()
-
+engine.run()
+engine.run()

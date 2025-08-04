@@ -1,3 +1,8 @@
+"""___Modules_______________________________________________________________"""
+
+# Python
+import numpy as np
+
 """___Functions_____________________________________________________________"""
 
 def to_base2(number: int) -> str:
@@ -46,10 +51,19 @@ def get_dict_text(dico: dict) -> str:
 
 def binary_to_game_data(binary: str, dimension: int) -> dict:
     game_save = {}
-    binary = "0"*(dimension**2-len(binary))+binary
     for s, state in enumerate(binary):
         if state == "1":
             X = (s % dimension)
             Y = -(s // dimension)
             game_save[f"{X}.{Y}"] = "True"
     return game_save
+
+def binary_usefull(binary: str, dimension: int) -> bool:
+    matrix = np.zeros(shape=(dimension**2))
+    for c, charac in enumerate(binary):
+        matrix[c] = eval(charac)
+    matrix = np.reshape(matrix, (dimension, dimension))
+    if np.sum(matrix[0, :]) > 0 and np.sum(matrix[-1, :]) > 0 or np.sum(matrix[:, 0]) > 0 and np.sum(matrix[:, -1]):
+        return True
+    else:
+        return False

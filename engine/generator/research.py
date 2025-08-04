@@ -18,17 +18,22 @@ class Researcher(SaveManager):
     def __init__(self, infos: dict) -> None:
         self.infos = infos
     
-    def research(self) -> None:
+    def research(self, bar: bool = False) -> None:
         dimension = eval(self.infos["dimension"])
-        current = eval(self.infos["last"]) + 1
+        current = eval(self.infos["last"])
         last = 2**(dimension**2)
         n_ok = eval(self.infos["ok"])
         n_nook = eval(self.infos["nook"])
 
         ok_list = self.get_ok(dimension)
 
-        for k in tqdm(range(current, last+1)):
+        for k in tqdm(range(current, last), disable=not bar):
             binary = np.binary_repr(k)
+            assert dimension**2 >= len(binary), f"Dimension = {dimension} alors que binary = {binary}"
+            binary = "0"*( dimension**2 - len(binary) ) + binary
+            if not binary_usefull(binary, dimension):
+                n_nook += 1
+                continue
             game_save = binary_to_game_data(binary, dimension)
 
             game = JeuDeLaVie(game_save)
@@ -41,7 +46,7 @@ class Researcher(SaveManager):
             
             self.infos["ok"] = str(n_ok)
             self.infos["nook"] = str(n_nook)
-            self.infos["last"] = str(k)
+            self.infos["last"] = str(k+1)
         
         self.infos["done"] = "True"
         self.save_ok(dimension, ok_list)

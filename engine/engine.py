@@ -15,15 +15,22 @@ from typing import Dict, List
 
 class Engine(SaveManager):
 
-    def __init__(self) -> None:
+    def __init__(self, void: bool=False) -> None:
         super().__init__()
+        if void: self.void()
     
     def start(self) -> None:
         infos = self.get_next_dimension()
         self.researcher = Researcher(infos)
 
         print(f"Dimensions initialisées : {self.dimensions}")
-        print(f"Dimension en cours de recherche : {infos["dimension"]}")
 
     def run(self) -> None:
-        self.researcher.research()
+        state = self.researcher.infos["done"]
+        dimension = eval(self.researcher.infos["dimension"])
+        if state == "True":
+            dimension += 1
+            self.create_folder(dimension)
+            self.researcher.infos = self.get_next_dimension()    
+        print(f"Début des recherches en dimension {dimension} !")
+        self.researcher.research(bar=True)
