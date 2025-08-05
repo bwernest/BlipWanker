@@ -55,14 +55,14 @@ class Researcher(SaveManager):
             else:
                 self.simulation_failed()
         
-        # End
-        self.export_infos()
         self.done = True
-        self.save_ok(self.dimension, self.ok_list)
+        self.export_infos()
     
     def simulation_succeed(self, binary_g: str) -> None:
-        self.ok_list.append(get_compact_binary(binary_g))
+        binary_c = get_compact_binary(binary_g)
+        self.ok_list.append(binary_c)
         self.ok += 1
+        self.save_ok(self.dimension, binary_c)
         self.export_infos()
     
     def simulation_failed(self) -> None:

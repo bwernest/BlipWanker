@@ -17,9 +17,8 @@ class Engine(SaveManager):
         infos = self.get_next_dimension()
         self.researcher = Researcher(infos)
 
-        print(f"Dimensions initialisées : {self.dimensions}")
-
     def run(self) -> None:
+        self.start()
         state = self.researcher.done
         dimension = self.researcher.dimension
         if state == "True":

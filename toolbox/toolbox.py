@@ -34,8 +34,8 @@ def print_info(text: str, objet: any) -> None:
             render += f"\n{key} =\t{value}"
     print(render)
 
-def write_txt(path: str, text: str, extension: str = "txt") -> None:
-    with open(f"{path}.{extension}", "w") as txt:
+def write_txt(path: str, text: str, extension: str = "txt", method: str = "w") -> None:
+    with open(f"{path}.{extension}", method) as txt:
         txt.write(text)
 
 def read_txt(path: str, extension: str = "txt") -> list[str]:

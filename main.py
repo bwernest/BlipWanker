@@ -13,7 +13,6 @@ import numpy as np
 """___Execution_____________________________________________________________"""
 
 engine = Engine(void=False)
-engine.start()
-engine.run()
 # engine.run()
+engine.run()
 # engine.run()
