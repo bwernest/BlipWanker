@@ -23,15 +23,16 @@ class Researcher(SaveManager):
 
     def __init__(self, infos: dict) -> None:
         self.import_infos(infos)
-    
+
     def import_infos(self, infos: dict) -> None:
         for element in ["dimension", "last", "ok", "nook"]:
             self.__setattr__(element, eval(infos[element]))
         self.done = infos["done"]
         self.ok_list = self.get_ok(self.dimension)
-    
+
     def export_infos(self) -> None:
-        infos = {element: str(self.__getattribute__(element)) for element in ["done", "dimension", "last", "ok", "nook"]}
+        infos = {element: str(self.__getattribute__(element))
+                 for element in ["done", "dimension", "last", "ok", "nook"]}
         self.save_infos(infos, self.dimension)
 
     def research(self, bar: bool = False) -> None:
@@ -47,24 +48,24 @@ class Researcher(SaveManager):
             if not binary_usefull(binary_g, self.dimension):
                 self.nook += 1
                 continue
-            
+
             # SImulation
-            game_grid = binary_to_game_data(binary_g, self.dimension)            
+            game_grid = binary_to_game_data(binary_g, self.dimension)
             if self.simulation(game_grid):
                 self.simulation_succeed(binary_g)
             else:
                 self.simulation_failed()
-        
+
         self.done = True
         self.export_infos()
-    
+
     def simulation_succeed(self, binary_g: str) -> None:
         binary_c = get_compact_binary(binary_g)
         self.ok_list.append(binary_c)
         self.ok += 1
         self.save_ok(self.dimension, binary_c)
         self.export_infos()
-    
+
     def simulation_failed(self) -> None:
         self.nook += 1
 

@@ -11,27 +11,27 @@ from typing import Dict, List
 
 class SaveManager():
 
-    save_path : str = "save"
+    save_path: str = "save"
 
-    folder_name : str = "Dimension"
-    folder_num_len : int = 5
+    folder_name: str = "Dimension"
+    folder_num_len: int = 5
 
-    file_ok : str = "PatternOK"
-    file_nook : str = "PatternNOOK"
-    file_infos : str = "Infos"
+    file_ok: str = "PatternOK"
+    file_nook: str = "PatternNOOK"
+    file_infos: str = "Infos"
 
     def __init__(self) -> None:
         self.get_dimensions()
-    
+
     def __repr__(self) -> str:
         return f"<Generator>"
-    
+
     def get_dimensions(self) -> None:
         dimensions_folders = os.listdir(self.save_path)
-        self.dimensions : List[int] = []
+        self.dimensions: List[int] = []
         for folder in dimensions_folders:
             self.dimensions.append(super_eval(folder[-self.folder_num_len:]))
-    
+
     def get_next_dimension(self) -> dict:
         self.get_dimensions()
         finished = True
@@ -49,46 +49,48 @@ class SaveManager():
         return self.get_infos(dimension)
 
     def create_folder(self, dimension: int) -> None:
-        new_folder_name = self.save_path+"/"+self.folder_name+"0"*(self.folder_num_len-len(str(dimension)))+str(dimension)
+        new_folder_name = self.save_path + "/" + self.folder_name + "0" * \
+            (self.folder_num_len - len(str(dimension))) + str(dimension)
         os.makedirs(new_folder_name)
         infos = {"done": "False", "last": "0", "ok": "0", "nook": "0", "dimension": str(dimension)}
-        write_txt(new_folder_name+"/"+self.file_infos, get_dict_to_text(infos))
-        write_txt(new_folder_name+"/"+self.file_ok, "")
-        write_txt(new_folder_name+"/"+self.file_nook, "")
+        write_txt(new_folder_name + "/" + self.file_infos, get_dict_to_text(infos))
+        write_txt(new_folder_name + "/" + self.file_ok, "")
+        write_txt(new_folder_name + "/" + self.file_nook, "")
 
     def get_infos(self, dimension: int) -> Dict:
-        folder_name = f"{self.folder_name}{"0"*(self.folder_num_len-len(str(dimension)))}{dimension}"
-        text = read_txt(self.save_path+"/"+folder_name+"/"+self.file_infos)
+        folder_name = f"{self.folder_name}{"0" * (self.folder_num_len - len(str(dimension)))}{dimension}"
+        text = read_txt(self.save_path + "/" + folder_name + "/" + self.file_infos)
         infos = {}
         for line in text:
             key, value = line.split("=")
-            if "\n" in value : value = value[:-1]
+            if "\n" in value:
+                value = value[:-1]
             infos[key] = value
         return infos
-    
+
     def save_infos(self, dico: dict, dimension: int) -> None:
         text = get_dict_to_text(dico)
-        write_txt(self.save_path+"/"+self.get_folder_name(dimension)+"/"+self.file_infos, text)
+        write_txt(self.save_path + "/" + self.get_folder_name(dimension) + "/" + self.file_infos, text)
 
     def void(self) -> None:
         for dimension in self.dimensions:
-            folder_path = self.save_path+"/"+self.get_folder_name(dimension)
+            folder_path = self.save_path + "/" + self.get_folder_name(dimension)
             for file in os.listdir(folder_path):
-                os.remove(folder_path+"/"+file)
+                os.remove(folder_path + "/" + file)
             os.removedirs(folder_path)
         os.makedirs(self.save_path, exist_ok=True)
         self.dimensions = []
 
     def get_ok(self, dimension: int) -> List[str]:
-        file_name = self.save_path+"/"+self.get_folder_name(dimension)+"/"+self.file_ok
+        file_name = self.save_path + "/" + self.get_folder_name(dimension) + "/" + self.file_ok
         return read_txt(file_name)
 
     def save_ok(self, dimension: int, binary: str) -> None:
-        file_name = self.save_path+"/"+self.get_folder_name(dimension)+"/"+self.file_ok
-        write_txt(file_name, f"{binary}\n", method = "a")
+        file_name = self.save_path + "/" + self.get_folder_name(dimension) + "/" + self.file_ok
+        write_txt(file_name, f"{binary}\n", method="a")
 
     def get_nook(self, dimension: int) -> List[str]:
         pass
 
     def get_folder_name(self, dimension: int) -> str:
-        return self.folder_name+"0"*(self.folder_num_len-len(str(dimension)))+str(dimension)
+        return self.folder_name + "0" * (self.folder_num_len - len(str(dimension))) + str(dimension)

@@ -68,8 +68,8 @@ class Test_Toolbox():
         assertEqual(expected, result)
 
     def test_to_base10(self) -> None:
-        numbers =  ["0", "1", "10", "1101"]
-        expected = [ 0,   1,    2,     13 ]
+        numbers = ["0", "1", "10", "1101"]
+        expected = [0, 1, 2, 13]
         result = [to_base10(number) for number in numbers]
         assertListEqual(expected, result)
 
@@ -77,7 +77,7 @@ class Test_Toolbox():
         numbers = ["0", "01", "26", "0.89", "01492.15150"]
         expected = [0, 1, 26, 0.89, 1492.1515]
         result = [super_eval(number) for number in numbers]
-        assertListEqual(expected, result)    
+        assertListEqual(expected, result)
 
     def test_get_dict_to_text(self) -> None:
         dico = {"mdr": 5, 26: "lol"}

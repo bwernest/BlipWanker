@@ -8,8 +8,8 @@ import numpy as np
 def to_base10(number: str) -> int:
     if number in ["0", "1"]:
         return eval(number)
-    else :
-        return eval(number[0])*2**(len(number)-1) + to_base10(number[1:])
+    else:
+        return eval(number[0]) * 2**(len(number) - 1) + to_base10(number[1:])
 
 def super_eval(number: str) -> int:
     while number.startswith("0"):
@@ -63,8 +63,9 @@ def binary_usefull(binary: str, dimension: int) -> bool:
         return False
 
 def get_grid_binary(binary: str, dimension: int) -> str:
-    return "0"*( dimension**2 - len(binary) ) + binary
+    return "0" * (dimension**2 - len(binary)) + binary
 
 def get_compact_binary(binary: str) -> str:
-    while binary.startswith("0"): binary = binary[1:]
+    while binary.startswith("0"):
+        binary = binary[1:]
     return binary if binary != "" else "0"
