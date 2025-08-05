@@ -7,7 +7,6 @@ from toolbox import *
 from copy import deepcopy
 from matplotlib import pyplot as plt
 import numpy as np
-from tqdm import tqdm
 from typing import Dict, List, Tuple
 
 """___Classes_______________________________________________________________"""

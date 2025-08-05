@@ -5,12 +5,6 @@ from .generator.research import Researcher
 from .generator.save_manager import SaveManager
 from toolbox import *
 
-# Python
-import numpy as np
-import os
-from tqdm import tqdm
-from typing import Dict, List
-
 """___Classes_______________________________________________________________"""
 
 class Engine(SaveManager):
@@ -26,11 +20,11 @@ class Engine(SaveManager):
         print(f"Dimensions initialisées : {self.dimensions}")
 
     def run(self) -> None:
-        state = self.researcher.infos["done"]
-        dimension = eval(self.researcher.infos["dimension"])
+        state = self.researcher.done
+        dimension = self.researcher.dimension
         if state == "True":
             dimension += 1
             self.create_folder(dimension)
-            self.researcher.infos = self.get_next_dimension()    
+            self.researcher.import_infos(self.get_next_dimension())   
         print(f"Début des recherches en dimension {dimension} !")
         self.researcher.research(bar=True)

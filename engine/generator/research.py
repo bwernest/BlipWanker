@@ -15,39 +15,60 @@ from typing import Dict, List
 
 class Researcher(SaveManager):
 
+    done: str
+    dimension: int
+    last: int
+    n_ok: int
+    n_nook: int
+
     def __init__(self, infos: dict) -> None:
-        self.infos = infos
+        self.import_infos(infos)
     
+    def import_infos(self, infos: dict) -> None:
+        for element in ["dimension", "last", "ok", "nook"]:
+            self.__setattr__(element, eval(infos[element]))
+        self.done = infos["done"]
+        self.ok_list = self.get_ok(self.dimension)
+    
+    def export_infos(self) -> None:
+        infos = {element: str(self.__getattribute__(element)) for element in ["done", "dimension", "last", "ok", "nook"]}
+        self.save_infos(infos, self.dimension)
+
     def research(self, bar: bool = False) -> None:
-        dimension = eval(self.infos["dimension"])
-        current = eval(self.infos["last"])
-        last = 2**(dimension**2)
-        n_ok = eval(self.infos["ok"])
-        n_nook = eval(self.infos["nook"])
 
-        ok_list = self.get_ok(dimension)
+        final = 2**(self.dimension**2)
+        print(f"Démarrage recherche de {self.last} à {final}")
+        for k in tqdm(range(self.last, final), disable=not bar):
+            self.last += 1
 
-        for k in tqdm(range(current, last), disable=not bar):
-            binary = np.binary_repr(k)
-            assert dimension**2 >= len(binary), f"Dimension = {dimension} alors que binary = {binary}"
-            binary = "0"*( dimension**2 - len(binary) ) + binary
-            if not binary_usefull(binary, dimension):
-                n_nook += 1
+            # Binary treatment
+            binary_c = np.binary_repr(k)
+            binary_g = get_grid_binary(binary_c, self.dimension)
+            if not binary_usefull(binary_g, self.dimension):
+                self.nook += 1
                 continue
-            game_save = binary_to_game_data(binary, dimension)
-
-            game = JeuDeLaVie(game_save)
-            game.simulate(100)
-            if game.live_cells > 0:
-                ok_list.append(binary)
-                n_ok += 1
-            else:
-                n_nook += 1
             
-            self.infos["ok"] = str(n_ok)
-            self.infos["nook"] = str(n_nook)
-            self.infos["last"] = str(k+1)
+            # SImulation
+            game_grid = binary_to_game_data(binary_g, self.dimension)            
+            if self.simulation(game_grid):
+                self.simulation_succeed(binary_g)
+            else:
+                self.simulation_failed()
         
-        self.infos["done"] = "True"
-        self.save_ok(dimension, ok_list)
-        self.save_infos(self.infos, dimension)
+        # End
+        self.export_infos()
+        self.done = True
+        self.save_ok(self.dimension, self.ok_list)
+    
+    def simulation_succeed(self, binary_g: str) -> None:
+        self.ok_list.append(get_compact_binary(binary_g))
+        self.ok += 1
+        self.export_infos()
+    
+    def simulation_failed(self) -> None:
+        self.nook += 1
+
+    def simulation(self, game_grid: dict) -> bool:
+        game = JeuDeLaVie(game_grid)
+        game.simulate(100, bar=False)
+        return game.live_cells > 0
