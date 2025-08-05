@@ -8,7 +8,7 @@ from test import *
 """___Classes_______________________________________________________________"""
 
 class Test_Researcher():
-    
+
     def test_to_game_save(self) -> None:
         binary = "1111"
         save = binary_to_game_data(binary, 2)
