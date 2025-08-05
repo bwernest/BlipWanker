@@ -5,15 +5,6 @@ import numpy as np
 
 """___Functions_____________________________________________________________"""
 
-def to_base2(number: int) -> str:
-    if number in [0, 1]:
-        return str(number)
-    else :
-        quotient = number // 2
-        reste = number - quotient * 2
-        new_number = number // 2
-        return to_base2(new_number) + str(reste)
-
 def to_base10(number: str) -> int:
     if number in ["0", "1"]:
         return eval(number)
@@ -23,7 +14,7 @@ def to_base10(number: str) -> int:
 def super_eval(number: str) -> int:
     while number.startswith("0"):
         number = number[1:]
-    return eval(number)
+    return 0 if number == "" else eval(number)
 
 def print_info(text: str, objet: any) -> None:
     render = f"{text} :"
@@ -43,7 +34,7 @@ def read_txt(path: str, extension: str = "txt") -> list[str]:
         data = txt.readlines()
     return data
 
-def get_dict_text(dico: dict) -> str:
+def get_dict_to_text(dico: dict) -> str:
     text = []
     for key, value in dico.items():
         text.append(f"{key}={value}")

@@ -52,7 +52,7 @@ class SaveManager():
         new_folder_name = self.save_path+"/"+self.folder_name+"0"*(self.folder_num_len-len(str(dimension)))+str(dimension)
         os.makedirs(new_folder_name)
         infos = {"done": "False", "last": "0", "ok": "0", "nook": "0", "dimension": str(dimension)}
-        write_txt(new_folder_name+"/"+self.file_infos, get_dict_text(infos))
+        write_txt(new_folder_name+"/"+self.file_infos, get_dict_to_text(infos))
         write_txt(new_folder_name+"/"+self.file_ok, "")
         write_txt(new_folder_name+"/"+self.file_nook, "")
 
@@ -67,7 +67,7 @@ class SaveManager():
         return infos
     
     def save_infos(self, dico: dict, dimension: int) -> None:
-        text = get_dict_text(dico)
+        text = get_dict_to_text(dico)
         write_txt(self.save_path+"/"+self.get_folder_name(dimension)+"/"+self.file_infos, text)
 
     def void(self) -> None:
