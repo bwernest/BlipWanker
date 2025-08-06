@@ -16,5 +16,6 @@ def void(fonction):
             shutil.rmtree(test_folder)
         os.makedirs(test_folder)
         result = fonction(*args, **kwargs)
+        shutil.rmtree(test_folder)
         return result
     return clean_test_folder

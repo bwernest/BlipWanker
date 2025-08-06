@@ -2,7 +2,7 @@
 
 # BlipWanker
 from toolbox import *
-from test.asserts import *
+from test import *
 
 """___Classes_______________________________________________________________"""
 
@@ -84,3 +84,38 @@ class Test_Toolbox():
         expected = "mdr=5\n26=lol"
         result = get_dict_to_text(dico)
         assertEqual(expected, result)
+
+    @void
+    def test_write_txt1(self) -> None:
+        text = "Bonsoir"
+        write_txt(test_folder+"/"+"lol", text)
+    
+    @void
+    def test_write_txt2(self) -> None:
+        text = "Bonsoir"
+        write_txt(test_folder+"/"+"lol", text)
+        write_txt(test_folder+"/"+"lol", text, "a")
+    
+    @void
+    def test_write_txt3(self) -> None:
+        text = "Bonsoir"
+        write_txt(test_folder+"/"+"lol", text, "a")
+    
+    @void
+    def test_read_txt(self) -> None:
+        text = "Bonsoir"
+        write_txt(test_folder+"/"+"lol", text)
+        data = read_txt(test_folder+"/"+"lol")
+        assertEqual(text, data[0])
+
+    def test_print_info1(self, capsys) -> None:
+        print_info("5", 5)
+        result = capsys.readouterr()
+        expected = "5 : 5\n"
+        assertIn(expected, result)
+
+    def test_print_info2(self, capsys) -> None:
+        print_info("Mois", {"Janvier": 1, "Février": "Quoicoubeh"})
+        result = capsys.readouterr()
+        expected = "Mois :\nJanvier =\t1\nFévrier =\tQuoicoubeh\n"
+        assertIn(expected, result)
