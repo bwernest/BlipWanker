@@ -6,6 +6,7 @@ from engine.simulation.simulation import JeuDeLaVie
 from test.asserts import *
 
 # Python
+from unittest.mock import patch
 import numpy as np
 
 """___Classes_______________________________________________________________"""
@@ -117,3 +118,24 @@ class Test_Simulation():
         simu = JeuDeLaVie(Data.OSCILLATOR())
         simu.simulate(3)
         assertEqual(simu.grid.grid, Data.OSCILLATOR())
+
+    def test_get_matrix1(self) -> None:
+        expected = np.array([[1]], dtype=int)
+        grid = {"0.0": True}
+        game = JeuDeLaVie(grid)
+        result = game.get_matrix()
+        assertEqual(expected, result)
+
+    def test_get_matrix2(self) -> None:
+        expected = np.array([[1, 0, 0, 1]], dtype=int)
+        grid = {"0.0": True, "3.0": True}
+        game = JeuDeLaVie(grid)
+        result = game.get_matrix()
+        assertEqual(expected, result)
+
+    def test_get_matrix3(self) -> None:
+        expected = np.array([[0, 1], [1, 0]], dtype=int)
+        grid = {"0.0": True, "1.1": True}
+        game = JeuDeLaVie(grid)
+        result = game.get_matrix()
+        assertEqual(expected, result)

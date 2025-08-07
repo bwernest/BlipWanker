@@ -92,7 +92,7 @@ class JeuDeLaVie():
         return True if alives.count(True) == 3 else False
 
     def get_matrix(self) -> np.ndarray:
-        minX, maxX, minY, maxY = 0, 0, 1, 1
+        minX, maxX, minY, maxY = 0, 0, 0, 0
         for cell, state in self.grid.items():
             if state:
                 coords = self.get_coords(cell)
@@ -101,7 +101,7 @@ class JeuDeLaVie():
                 minY = min(minY, coords[1])
                 maxY = max(maxY, coords[1])
 
-        grille = np.zeros(shape=(maxY - minY + 1, maxX - minX + 1))
+        grille = np.zeros(shape=(maxY - minY + 1, maxX - minX + 1), dtype=int)
 
         for cell, state in self.grid.items():
             if state:

@@ -1,0 +1,8 @@
+{
+    "prod": {
+        "save_path": "save"
+    },
+    "test": {
+        "save_path": "test/test_data/save"
+    }
+}

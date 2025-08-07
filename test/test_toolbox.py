@@ -88,25 +88,31 @@ class Test_Toolbox():
     @void
     def test_write_txt1(self) -> None:
         text = "Bonsoir"
-        write_txt(test_folder+"/"+"lol", text)
+        write_txt(save_path+"/"+"lol", text)
     
     @void
     def test_write_txt2(self) -> None:
         text = "Bonsoir"
-        write_txt(test_folder+"/"+"lol", text)
-        write_txt(test_folder+"/"+"lol", text, "a")
+        write_txt(save_path+"/"+"lol", text)
+        write_txt(save_path+"/"+"lol", text, "a")
     
     @void
     def test_write_txt3(self) -> None:
         text = "Bonsoir"
-        write_txt(test_folder+"/"+"lol", text, "a")
+        write_txt(save_path+"/"+"lol", text, "a")
     
     @void
     def test_read_txt(self) -> None:
         text = "Bonsoir"
-        write_txt(test_folder+"/"+"lol", text)
-        data = read_txt(test_folder+"/"+"lol")
+        write_txt(save_path+"/"+"lol", text)
+        data = read_txt(save_path+"/"+"lol")
         assertEqual(text, data[0])
+
+    def test_to_game_save(self) -> None:
+        binary = "1111"
+        save = binary_to_game_data(binary, 2)
+        expected = {"0.0": "True", "1.0": "True", "0.-1": "True", "1.-1": "True"}
+        assertDictEqual(save, expected)
 
     def test_print_info1(self, capsys) -> None:
         print_info("5", 5)

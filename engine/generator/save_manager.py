@@ -11,7 +11,7 @@ from typing import Dict, List
 
 class SaveManager():
 
-    save_path: str = "save"
+    save_path: str
 
     folder_name: str = "Dimension"
     folder_num_len: int = 5
@@ -20,7 +20,8 @@ class SaveManager():
     file_nook: str = "PatternNOOK"
     file_infos: str = "Infos"
 
-    def __init__(self) -> None:
+    def __init__(self, save_path: str) -> None:
+        self.save_path = save_path
         self.get_dimensions()
 
     def __repr__(self) -> str:
@@ -72,14 +73,18 @@ class SaveManager():
         text = get_dict_to_text(dico)
         write_txt(self.save_path + "/" + self.get_folder_name(dimension) + "/" + self.file_infos, text)
 
-    def void(self) -> None:
+    def void(self, path: str) -> None:
         for dimension in self.dimensions:
-            folder_path = self.save_path + "/" + self.get_folder_name(dimension)
+            folder_path = self.get_path(dimension)
             for file in os.listdir(folder_path):
                 os.remove(folder_path + "/" + file)
             os.removedirs(folder_path)
         os.makedirs(self.save_path, exist_ok=True)
         self.dimensions = []
+
+    def get_path(self, dimension: str, extra: str = None) -> str:
+        path = f"{self.save_path}/{self.get_folder_name(dimension)}"
+        return path if extra is None else f"{path}/{extra}"
 
     def get_ok(self, dimension: int) -> List[str]:
         file_name = self.save_path + "/" + self.get_folder_name(dimension) + "/" + self.file_ok

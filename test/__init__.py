@@ -2,4 +2,4 @@
 
 # BlipWanker
 from .asserts import *
-from .settings import void, test_folder
+from .data_manager import void, save_path

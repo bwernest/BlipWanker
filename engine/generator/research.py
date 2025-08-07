@@ -21,7 +21,8 @@ class Researcher(SaveManager):
     n_ok: int
     n_nook: int
 
-    def __init__(self, infos: dict) -> None:
+    def __init__(self, save_path: str, infos: dict) -> None:
+        super().__init__(save_path)
         self.import_infos(infos)
 
     def import_infos(self, infos: dict) -> None:
