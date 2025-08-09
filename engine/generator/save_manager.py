@@ -25,7 +25,7 @@ class SaveManager():
         self.get_dimensions()
 
     def __repr__(self) -> str:
-        return f"<Generator>"
+        return f"<SaveManager>"
 
     def get_dimensions(self) -> None:
         dimensions_folders = os.listdir(self.save_path)
