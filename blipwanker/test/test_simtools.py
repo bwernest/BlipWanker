@@ -36,3 +36,12 @@ class Test_SimTools():
         result = get_loop(Data.PLANEUR())
         assertEqual(4, len(result))
         assertEqual(expected, result)
+
+    def test_screen_generations(self) -> None:
+        expected = [
+            "000111000",
+            "010010010",
+        ]
+        matrices = screen_generations(Data.BAR(), bar=False)
+        result = [matrix_to_binary(matrix)[0] for matrix in matrices]
+        assertListEqual(expected, result)

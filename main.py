@@ -12,9 +12,10 @@ import numpy as np
 
 """___Execution_____________________________________________________________"""
 
-dimension = 1000
+dimension = 400
 matrix = np.random.randint(0, 2, size=(dimension, dimension), dtype=int)
 binary, _ = matrix_to_binary(matrix)
 game_save = binary_to_game_save(binary, dimension)
 
-generate_gif(game_save, 500)
+# generate_gif(game_save, 100)
+generate_gif(Data.TOIT(), 200, bar=True)

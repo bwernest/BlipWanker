@@ -9,10 +9,9 @@ version = "0.1.0"
 go = "python main.py"
 format = "autopep8 --in-place --recursive ./"
 test = "pytest blipwanker"
-print_test = "pytest -s test"
 
 reset_cover = "coverage erase"
-get_cover = "coverage run -m pytest test"
+get_cover = "coverage run -m pytest blipwanker test"
 show_cover = "coverage html"
 coverage = {depends-on = ["reset_cover", "get_cover", "show_cover"]}
 

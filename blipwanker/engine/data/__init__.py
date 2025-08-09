@@ -1,6 +1,7 @@
 """___Modules_______________________________________________________________"""
 
 # BlipWanker
+from .bac_de_tri import *
 from .periodic import *
 from .ship import *
 from .stable import *
@@ -18,6 +19,7 @@ class Data(Enum):
     PENTADECATHLON = pentadecathlon
     PLANEUR = planeur
     SQUARE = square
+    TOIT = toit
 
     def __call__(self) -> dict:
         return deepcopy(self.value)

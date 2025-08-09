@@ -43,7 +43,7 @@ def get_loop(game_save: Dict) -> List[str]:
         if simulator.generation > 1000:
             raise TooMuchIteration("Impossible de déterminer une loop pour cette save.")
 
-def screen_generations(game_save: dict, start: int = 0, end: int = None, duration: int = 10) -> List[np.ndarray]:
+def screen_generations(game_save: dict, start: int = 0, end: int = None, duration: int = 10, bar: bool = False) -> List[np.ndarray]:
     """
     Simule des générations à partir de game_save. Selon les paramètres renseignés,
     sauvegarde un certain nombre de grilles.
@@ -58,7 +58,7 @@ def screen_generations(game_save: dict, start: int = 0, end: int = None, duratio
     if end is not None:
         duration = end - start
 
-    for _ in tqdm(range(duration - 1), desc="Simulation"):
+    for _ in tqdm(range(duration - 1), desc="Simulation", disable=not bar):
         simulator.next()
         generations.append(simulator.get_matrix())
         bounds = simulator.bounds
@@ -67,21 +67,20 @@ def screen_generations(game_save: dict, start: int = 0, end: int = None, duratio
             max_bounds[key] = max(value, bounds[key]) if key.endswith("+") else min(value, bounds[key])
 
     for g, matrix in enumerate(generations):
-        matrix = extend_matrix(
+        generations[g] = extend_matrix(
             matrix,
             up=abs(max_bounds["y+"] - all_bounds[g]["y+"]),
             down=abs(max_bounds["y-"] - all_bounds[g]["y-"]),
             right=abs(max_bounds["x+"] - all_bounds[g]["x+"]),
             left=abs(max_bounds["x-"] - all_bounds[g]["x-"]),
         )
-        generations[g] = get_square_matrix(matrix)
 
     return generations
 
-def generate_gif(game_save: dict, n_frames: int = 10) -> None:
+def generate_gif(game_save: dict, n_frames: int = 10, bar: bool = False) -> None:
 
     # Génération de toutes les matrices à l'avance
-    matrices = screen_generations(game_save, duration=n_frames)
+    matrices = screen_generations(game_save, duration=n_frames, bar=bar)
     size = matrices[0].shape[0]
 
     # Création de la figure
