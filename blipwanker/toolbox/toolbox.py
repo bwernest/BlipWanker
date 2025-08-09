@@ -44,7 +44,7 @@ def get_dict_to_text(dico: dict) -> str:
         text.append(f"{key}={value}")
     return "\n".join(text)
 
-def binary_to_game_data(binary: str, dimension: int) -> dict:
+def binary_to_game_save(binary: str, dimension: int) -> dict:
     game_save = {}
     for s, state in enumerate(binary):
         if state == "1":
@@ -60,14 +60,26 @@ def get_square_matrix(matrix: np.ndarray) -> np.ndarray:
     """
     shape = matrix.shape
     if shape[0] < shape[1]:
-        zeros = np.zeros((shape[1] - shape[0], shape[1]), dtype=int)
-        matrix = np.vstack((zeros, matrix))
+        matrix = extend_matrix(matrix, up=shape[1] - shape[0])
     elif shape[0] > shape[1]:
-        zeros = np.zeros((shape[0], shape[0] - shape[1]), dtype=int)
-        matrix = np.hstack((zeros, matrix))
+        matrix = extend_matrix(matrix, left=shape[0] - shape[1])
     return matrix
 
-def game_data_to_binary(matrix: np.ndarray) -> Tuple[str, int]:
+def extend_matrix(matrix: np.ndarray, up: int = 0, down: int = 0, left: int = 0, right: int = 0) -> np.ndarray:
+    """
+    Ajoute length colonnes de 0 et height lignes de 0 à matrix.
+    """
+    zeros = np.zeros((matrix.shape[0], left), dtype=int)
+    matrix = np.hstack((zeros, matrix))
+    zeros = np.zeros((matrix.shape[0], right), dtype=int)
+    matrix = np.hstack((matrix, zeros))
+    zeros = np.zeros((up, matrix.shape[1]), dtype=int)
+    matrix = np.vstack((zeros, matrix))
+    zeros = np.zeros((down, matrix.shape[1]), dtype=int)
+    matrix = np.vstack((matrix, zeros))
+    return matrix
+
+def matrix_to_binary(matrix: np.ndarray) -> Tuple[str, int]:
     matrix = get_square_matrix(matrix)
     binary_g = ""
     for line in matrix:

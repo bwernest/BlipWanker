@@ -50,7 +50,7 @@ class Researcher(SaveManager, Analysor):
                 continue
 
             # SImulation
-            game_grid = binary_to_game_data(binary_g, self.dimension)
+            game_grid = binary_to_game_save(binary_g, self.dimension)
             if self.simulation(game_grid):
                 self.simulation_succeed(binary_g)
             else:

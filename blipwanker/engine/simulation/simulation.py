@@ -49,6 +49,18 @@ class JeuDeLaVie():
     def dead_cells(self) -> int:
         return list(self.grid.values()).count(False)
 
+    @property
+    def bounds(self) -> dict:
+        bounds = {"x+": 0, "x-": 0, "y+": 0, "y-": 0}
+        for key, state in self.grid.items():
+            if state:
+                X, Y = self.get_coords(key)
+                bounds["x+"] = max(bounds["x+"], X)
+                bounds["x-"] = min(bounds["x-"], X)
+                bounds["y+"] = max(bounds["y+"], Y)
+                bounds["y-"] = min(bounds["y-"], Y)
+        return bounds
+
     def simulate(self, turn: int = 1, bar: bool = False):
         self.compact()
         for _ in tqdm(range(turn), disable=not bar):
@@ -152,4 +164,4 @@ class JeuDeLaVie():
         return self.grid.grid
 
     def get_save_binary(self) -> str:
-        return game_data_to_binary(self.get_matrix())[0]
+        return matrix_to_binary(self.get_matrix())[0]

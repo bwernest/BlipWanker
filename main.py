@@ -12,7 +12,9 @@ import numpy as np
 
 """___Execution_____________________________________________________________"""
 
-loop = get_loop(Data.PLANEUR())
+dimension = 1000
+matrix = np.random.randint(0, 2, size=(dimension, dimension), dtype=int)
+binary, _ = matrix_to_binary(matrix)
+game_save = binary_to_game_save(binary, dimension)
 
-print_info("Loop", loop)
-print(f"Loop de taille {len(loop)}")
+generate_gif(game_save, 500)

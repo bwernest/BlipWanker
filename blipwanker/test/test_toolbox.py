@@ -110,7 +110,7 @@ class Test_Toolbox():
 
     def test_to_game_save(self) -> None:
         binary = "1111"
-        save = binary_to_game_data(binary, 2)
+        save = binary_to_game_save(binary, 2)
         expected = {"0.0": "True", "1.0": "True", "0.-1": "True", "1.-1": "True"}
         assertDictEqual(save, expected)
 
@@ -131,3 +131,15 @@ class Test_Toolbox():
         print_info("Mois", {"Janvier": 1, "Février": "Quoicoubeh"})
         result = capsys.readouterr()
         assertIn(expected, result)
+
+    def test_extend_matrix(self) -> None:
+        expected = np.zeros((12, 26), dtype=int)
+        matrix = np.zeros((4, 2), dtype=int)
+        result = extend_matrix(matrix, left=14, right=10, up=8, down=0)
+        assertEqual(expected, result)
+
+    def test_get_square_matrix(self) -> None:
+        expected = np.zeros((3, 3), dtype=int)
+        matrix = np.zeros((3, 1), dtype=int)
+        result = get_square_matrix(matrix)
+        assertEqual(expected, result)
