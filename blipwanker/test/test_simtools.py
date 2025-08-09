@@ -25,3 +25,14 @@ class Test_SimTools():
         result = get_loop(Data.BAR())
         assertEqual(2, len(result))
         assertEqual(expected, result)
+
+    def test_get_loop3(self) -> None:
+        expected = [
+            "111001010",
+            "010011101",
+            "011101001",
+            "110011100",
+        ]
+        result = get_loop(Data.PLANEUR())
+        assertEqual(4, len(result))
+        assertEqual(expected, result)

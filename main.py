@@ -12,7 +12,7 @@ import numpy as np
 
 """___Execution_____________________________________________________________"""
 
-loop = get_loop(Data.BAR())
+loop = get_loop(Data.PLANEUR())
 
 print_info("Loop", loop)
 print(f"Loop de taille {len(loop)}")
