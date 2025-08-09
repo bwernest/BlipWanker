@@ -8,7 +8,7 @@ version = "0.1.0"
 [tasks]
 go = "python main.py"
 format = "autopep8 --in-place --recursive ./"
-test = "pytest test"
+test = "pytest blipwanker"
 print_test = "pytest -s test"
 
 reset_cover = "coverage erase"
