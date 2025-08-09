@@ -1,8 +1,8 @@
 """___Modules_______________________________________________________________"""
 
 # BlipWanker
-from engine.engine import Engine
-from test import *
+from blipwanker.engine.engine import Engine
+from blipwanker.test import *
 
 # Python
 import os

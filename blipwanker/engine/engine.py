@@ -3,7 +3,7 @@
 # BlipWanker
 from .generator.research import Researcher
 from .generator.save_manager import SaveManager
-from toolbox import *
+from ..toolbox import *
 
 # Python
 import json
@@ -13,7 +13,7 @@ import json
 class Engine(SaveManager):
 
     def __init__(self, settings: str = "prod", void: bool = False) -> None:
-        with open(f"engine/settings.json") as data:
+        with open(f"blipwanker/engine/settings.json") as data:
             self.settings = json.load(data)
         self.save_path = self.settings[settings]["save_path"]
         super().__init__(save_path = self.save_path)

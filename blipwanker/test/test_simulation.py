@@ -1,12 +1,11 @@
 """___Modules_______________________________________________________________"""
 
 # BlipWanker
-from engine.data import Data
-from engine.simulation.simulation import JeuDeLaVie
-from test.asserts import *
+from blipwanker.engine.data import Data
+from blipwanker.engine.simulation.simulation import JeuDeLaVie
+from blipwanker.test import *
 
 # Python
-from unittest.mock import patch
 import numpy as np
 
 """___Classes_______________________________________________________________"""

@@ -1,7 +1,7 @@
 """___Modules_______________________________________________________________"""
 
 # BlipWanker
-from toolbox import *
+from ...toolbox import *
 
 # Python
 import os
@@ -91,7 +91,10 @@ class SaveManager():
         return read_txt(file_name)
 
     def save_ok(self, dimension: int, binary: str) -> None:
-        file_name = self.save_path + "/" + self.get_folder_name(dimension) + "/" + self.file_ok
+        """
+        Ajoute le binary entré à la save.
+        """
+        file_name = self.get_path(dimension, self.file_ok)
         write_txt(file_name, f"{binary}\n", method="a")
 
     def get_nook(self, dimension: int) -> List[str]:

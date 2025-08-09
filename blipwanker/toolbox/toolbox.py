@@ -2,6 +2,7 @@
 
 # Python
 import numpy as np
+from typing import Dict, Tuple
 
 """___Functions_____________________________________________________________"""
 
@@ -48,6 +49,28 @@ def binary_to_game_data(binary: str, dimension: int) -> dict:
             Y = -(s // dimension)
             game_save[f"{X}.{Y}"] = "True"
     return game_save
+
+def get_square_matrix(matrix: np.ndarray) -> np.ndarray:
+    """
+    A partir de matrix, ajoute des lignes ou colonnes de 0 en haut
+    ou à gauche pour la render carrée.
+    """
+    shape = matrix.shape
+    if shape[0] < shape[1]:
+        zeros = np.zeros((shape[1]-shape[0], shape[1]))
+        matrix = np.vstack((zeros, matrix))
+    elif shape[0] > shape[1]:
+        zeros = np.zeros((shape[0]-shape[1], shape[0]))
+        matrix = np.hstack((zeros, matrix))
+    return matrix
+
+def game_data_to_binary(matrix: np.ndarray) -> Tuple[str, int]:
+    matrix = get_square_matrix(matrix)
+    binary_g = ""
+    for line in matrix:
+        for c in line:
+            binary_g += str(c)
+    return (binary_g, matrix.shape[0])
 
 def binary_usefull(binary: str, dimension: int) -> bool:
     """

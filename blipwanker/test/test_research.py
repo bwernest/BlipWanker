@@ -1,9 +1,9 @@
 """___Modules_______________________________________________________________"""
 
 # BlipWanker
-from engine.generator.research import Researcher
-from toolbox import *
-from test import *
+from blipwanker.engine.generator.research import Researcher
+from blipwanker.toolbox import *
+from blipwanker.test import *
 
 """___Classes_______________________________________________________________"""
 

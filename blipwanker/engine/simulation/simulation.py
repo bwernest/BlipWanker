@@ -2,7 +2,7 @@
 
 # BlipWanker
 from .baerdict import BaerDict
-from toolbox import *
+from ...toolbox import *
 
 # Python
 from copy import deepcopy
@@ -140,3 +140,16 @@ class JeuDeLaVie():
         around[6] = [coords[0] - 1, coords[1]]
         around[7] = [coords[0] - 1, coords[1] + 1]
         return around
+
+    def get_save(self, format: str = "dict") -> any:
+        formats = {
+            "dict": self.get_save_dict,
+            "binary": self.get_save_binary,
+        }
+        return formats[format]()
+
+    def get_save_dict(self) -> dict:
+        return self.grid.grid()
+
+    def get_save_binary(self) -> str:
+        return game_data_to_binary(self.get_matrix())[0]

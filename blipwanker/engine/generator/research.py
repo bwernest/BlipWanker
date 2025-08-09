@@ -1,19 +1,18 @@
 """___Modules_______________________________________________________________"""
 
 # BlipWanker
-from ..simulation.simulation import JeuDeLaVie
+from .analysor import Analysor
 from .save_manager import SaveManager
-from toolbox import *
+from ..simulation.simulation import JeuDeLaVie
+from ...toolbox import *
 
 # Python
 import numpy as np
-import os
 from tqdm import tqdm
-from typing import Dict, List
 
 """___Classes_______________________________________________________________"""
 
-class Researcher(SaveManager):
+class Researcher(SaveManager, Analysor):
 
     done: str
     dimension: int
@@ -63,9 +62,10 @@ class Researcher(SaveManager):
     def simulation_succeed(self, binary_g: str) -> None:
         binary_c = get_compact_binary(binary_g)
         self.ok_list.append(binary_c)
-        self.ok += 1
-        self.save_ok(self.dimension, binary_c)
-        self.export_infos()
+        if self.analyse(binary_c, self.dimension, self.ok_list):
+            self.ok += 1
+            self.save_ok(self.dimension, binary_c)
+            self.export_infos()
 
     def simulation_failed(self) -> None:
         self.nook += 1

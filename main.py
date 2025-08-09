@@ -1,11 +1,11 @@
 """___Modules_______________________________________________________________"""
 
 # BlipWanker
-from engine.data import Data
-from engine.engine import Engine
-from engine.simulation import *
-from test.asserts import *
-from toolbox import *
+from blipwanker.engine.data import Data
+from blipwanker.engine.engine import Engine
+from blipwanker.engine.simulation import *
+from blipwanker.test.asserts import *
+from blipwanker.toolbox import *
 
 # Python
 import numpy as np

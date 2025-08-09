@@ -1,8 +1,8 @@
 """___Modules_______________________________________________________________"""
 
 # BlipWanker
-from engine.simulation.baerdict import BaerDict
-from test import *
+from blipwanker.engine.simulation.baerdict import BaerDict
+from blipwanker.test import *
 
 """___Classes_______________________________________________________________"""
 

@@ -1,8 +1,8 @@
 """___Modules_______________________________________________________________"""
 
 # BlipWanker
-from toolbox import *
-from test import *
+from blipwanker.toolbox import *
+from blipwanker.test import *
 
 """___Classes_______________________________________________________________"""
 

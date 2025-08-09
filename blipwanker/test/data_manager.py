@@ -19,7 +19,7 @@ def void(fonction):
     return clean_test_folder
 
 def import_settings() -> dict:
-    with open(f"engine/settings.json") as data:
+    with open(f"blipwanker/engine/settings.json") as data:
         return json.load(data)
 
 save_path = import_settings()["test"]["save_path"]

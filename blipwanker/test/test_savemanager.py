@@ -1,8 +1,8 @@
 """___Modules_______________________________________________________________"""
 
 # BlipWanker
-from engine.generator.save_manager import SaveManager
-from test import *
+from blipwanker.engine.generator.save_manager import SaveManager
+from blipwanker.test import *
 
 """___Classes_______________________________________________________________"""
 
