@@ -7,8 +7,10 @@ import numpy as np
 
 def assertEqual(arg1: any, arg2: any, error_msg: str = None) -> None:
     error_msg = error_msg if error_msg is not None else f"Arguments inégaux ! <{arg1}> / <{arg2}>"
-    if isinstance(arg1, np.ndarray): assert np.array_equal(arg1, arg2), error_msg
-    else: assert arg1 == arg2, error_msg
+    if isinstance(arg1, np.ndarray):
+        assert np.array_equal(arg1, arg2), error_msg
+    else:
+        assert arg1 == arg2, error_msg
 
 def assertNotEqual(arg1: any, arg2: any) -> None:
     assert arg1 != arg2, f"Arguments égaux ! {arg1} / {arg2}"

@@ -18,9 +18,12 @@ def super_eval(number: str) -> int:
     return 0 if number == "" else eval(number)
 
 def print_info(text: str, objet: any) -> None:
-    render = f"{text} :"
+    render = f"{text} {type(objet)} :"
     if isinstance(objet, (int, float, str)):
         render += f" {objet}"
+    elif isinstance(objet, (list)):
+        for i, item in enumerate(objet):
+            render += f"\n{i} =\t{item}"
     elif isinstance(objet, (dict)):
         for key, value in objet.items():
             render += f"\n{key} =\t{value}"
@@ -57,10 +60,10 @@ def get_square_matrix(matrix: np.ndarray) -> np.ndarray:
     """
     shape = matrix.shape
     if shape[0] < shape[1]:
-        zeros = np.zeros((shape[1]-shape[0], shape[1]))
+        zeros = np.zeros((shape[1] - shape[0], shape[1]), dtype=int)
         matrix = np.vstack((zeros, matrix))
     elif shape[0] > shape[1]:
-        zeros = np.zeros((shape[0]-shape[1], shape[0]))
+        zeros = np.zeros((shape[0], shape[0] - shape[1]), dtype=int)
         matrix = np.hstack((zeros, matrix))
     return matrix
 

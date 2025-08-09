@@ -16,7 +16,7 @@ class Engine(SaveManager):
         with open(f"blipwanker/engine/settings.json") as data:
             self.settings = json.load(data)
         self.save_path = self.settings[settings]["save_path"]
-        super().__init__(save_path = self.save_path)
+        super().__init__(save_path=self.save_path)
         if void:
             self.void(self.save_path)
 

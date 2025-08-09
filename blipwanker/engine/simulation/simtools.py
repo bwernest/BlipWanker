@@ -26,21 +26,16 @@ def get_signature(binary_c: str, dimension: int) -> str:
     game_save = binary_to_game_data(binary_c, dimension)
     loop = get_loop(game_save)
 
-def get_loop(game_save : Dict) -> List[str]:
+def get_loop(game_save: Dict) -> List[str]:
     simulator = JeuDeLaVie(game_save)
     generations = [simulator.get_save("binary")]
 
-    found = False
-    while not found:
+    while True:
         simulator.next()
         binary = simulator.get_save("binary")
         for g, generation in enumerate(generations):
             if binary == generation:
-                generations = generations[g:]
-                found = True
-                break
-            else:
-                generations.append(binary)
+                return generations[g:]
+        generations.append(binary)
         if simulator.generation > 1000:
             raise TooMuchIteration("Impossible de déterminer une loop pour cette save.")
-    return generations

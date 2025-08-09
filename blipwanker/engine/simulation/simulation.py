@@ -149,7 +149,7 @@ class JeuDeLaVie():
         return formats[format]()
 
     def get_save_dict(self) -> dict:
-        return self.grid.grid()
+        return self.grid.grid
 
     def get_save_binary(self) -> str:
         return game_data_to_binary(self.get_matrix())[0]

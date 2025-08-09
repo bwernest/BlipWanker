@@ -12,7 +12,7 @@ import numpy as np
 
 """___Execution_____________________________________________________________"""
 
-engine = Engine(void=False)
-# engine.run()
-engine.run()
-# engine.run()
+loop = get_loop(Data.BAR())
+
+print_info("Loop", loop)
+print(f"Loop de taille {len(loop)}")

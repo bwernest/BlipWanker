@@ -13,7 +13,7 @@ class Test_Engine():
 
     def test_init(self) -> None:
         eng = Engine(settings="test")
-    
+
     def test_init_void(self) -> None:
         eng = Engine(settings="test", void=False)
         eng.start()

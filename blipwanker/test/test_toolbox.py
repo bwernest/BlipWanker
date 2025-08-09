@@ -88,24 +88,24 @@ class Test_Toolbox():
     @void
     def test_write_txt1(self) -> None:
         text = "Bonsoir"
-        write_txt(save_path+"/"+"lol", text)
-    
+        write_txt(save_path + "/" + "lol", text)
+
     @void
     def test_write_txt2(self) -> None:
         text = "Bonsoir"
-        write_txt(save_path+"/"+"lol", text)
-        write_txt(save_path+"/"+"lol", text, "a")
-    
+        write_txt(save_path + "/" + "lol", text)
+        write_txt(save_path + "/" + "lol", text, "a")
+
     @void
     def test_write_txt3(self) -> None:
         text = "Bonsoir"
-        write_txt(save_path+"/"+"lol", text, "a")
-    
+        write_txt(save_path + "/" + "lol", text, "a")
+
     @void
     def test_read_txt(self) -> None:
         text = "Bonsoir"
-        write_txt(save_path+"/"+"lol", text)
-        data = read_txt(save_path+"/"+"lol")
+        write_txt(save_path + "/" + "lol", text)
+        data = read_txt(save_path + "/" + "lol")
         assertEqual(text, data[0])
 
     def test_to_game_save(self) -> None:
@@ -115,13 +115,19 @@ class Test_Toolbox():
         assertDictEqual(save, expected)
 
     def test_print_info1(self, capsys) -> None:
+        expected = f"5 {int} : 5\n"
         print_info("5", 5)
         result = capsys.readouterr()
-        expected = "5 : 5\n"
         assertIn(expected, result)
 
     def test_print_info2(self, capsys) -> None:
+        expected = f"Taches {list} :\n0 =\tlessive\n1 =\tvaisselle\n"
+        print_info("Taches", ["lessive", "vaisselle"])
+        result = capsys.readouterr()
+        assertIn(expected, result)
+
+    def test_print_info3(self, capsys) -> None:
+        expected = f"Mois {dict} :\nJanvier =\t1\nFévrier =\tQuoicoubeh\n"
         print_info("Mois", {"Janvier": 1, "Février": "Quoicoubeh"})
         result = capsys.readouterr()
-        expected = "Mois :\nJanvier =\t1\nFévrier =\tQuoicoubeh\n"
         assertIn(expected, result)
