@@ -102,12 +102,6 @@ class Test_Toolbox():
         data = read_txt(save_path + "/" + "lol")
         assertEqual(text, data[0])
 
-    def test_to_game_save(self) -> None:
-        binary = "1111"
-        save = binary_to_game_save(binary, 2)
-        expected = {"0.0": "True", "1.0": "True", "0.-1": "True", "1.-1": "True"}
-        assertDictEqual(save, expected)
-
     def test_print_info1(self, capsys) -> None:
         expected = f"5 {int} : 5\n"
         print_info("5", 5)

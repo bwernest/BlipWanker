@@ -1,5 +1,8 @@
 """___Modules_______________________________________________________________"""
 
+# BlipWanker
+from .errors import *
+
 # Python
 import numpy as np
 from typing import Dict, Tuple
@@ -39,15 +42,6 @@ def get_dict_to_text(dico: dict) -> str:
         text.append(f"{key}={value}")
     return "\n".join(text)
 
-def binary_to_game_save(binary: str, dimension: int) -> dict:
-    game_save = {}
-    for s, state in enumerate(binary):
-        if state == "1":
-            X = (s % dimension)
-            Y = -(s // dimension)
-            game_save[f"{X}.{Y}"] = "True"
-    return game_save
-
 def get_square_matrix(matrix: np.ndarray) -> np.ndarray:
     """
     A partir de matrix, ajoute des lignes ou colonnes de 0 en haut
@@ -74,16 +68,9 @@ def extend_matrix(matrix: np.ndarray, up: int = 0, down: int = 0, left: int = 0,
     matrix = np.vstack((matrix, zeros))
     return matrix
 
-def matrix_to_binary(matrix: np.ndarray) -> Tuple[str, int]:
-    """
-    A partir de matrix, exporte un binary ainsi que la dimension de matrix.
-    """
-    matrix = get_square_matrix(matrix)
-    binary_g = ""
-    for line in matrix:
-        for c in line:
-            binary_g += str(c)
-    return (binary_g, matrix.shape[0])
+def get_coords(key: str) -> Tuple[int, int]:
+    coords = key.split(".")
+    return (eval(coords[0]), eval(coords[1]))
 
 def binary_usefull(binary: str, dimension: int) -> bool:
     """
@@ -105,3 +92,22 @@ def get_compact_binary(binary: str) -> str:
     while binary.startswith("0"):
         binary = binary[1:]
     return binary if binary != "" else "0"
+
+def get_bounds(game_save: dict) -> dict:
+    first_cell = None
+    for key, state in game_save.items():
+        if state:
+            first_cell = key
+            break
+    if first_cell is None:
+        raise SimulationDead()
+    X, Y = get_coords(first_cell)
+    bounds = {"x+": X, "x-": X, "y+": Y, "y-": Y}
+    for key, state in game_save.items():
+        if state:
+            X, Y = get_coords(key)
+            bounds["x+"] = max(bounds["x+"], X)
+            bounds["x-"] = min(bounds["x-"], X)
+            bounds["y+"] = max(bounds["y+"], Y)
+            bounds["y-"] = min(bounds["y-"], Y)
+    return bounds

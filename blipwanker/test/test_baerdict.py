@@ -41,5 +41,6 @@ class Test_Baerdict():
         dico = {"tomate": 1492, "patate": 26}
         baer = BaerDict(dico)
         assertListEqual(sorted(list(baer.keys())), sorted(list(dico.keys())))
-        assertListEqual(sorted(list(baer.values())), sorted(list(dico.values())))
+        assertListEqual(sorted(list(baer.values())),
+                        sorted(list(dico.values())))
         assertListEqual(list(sorted(baer.items())), sorted(list(dico.items())))

@@ -53,14 +53,17 @@ class SaveManager():
         new_folder_name = self.save_path + "/" + self.folder_name + "0" * \
             (self.folder_num_len - len(str(dimension))) + str(dimension)
         os.makedirs(new_folder_name)
-        infos = {"done": "False", "last": "0", "ok": "0", "nook": "0", "dimension": str(dimension)}
-        write_txt(new_folder_name + "/" + self.file_infos, get_dict_to_text(infos))
+        infos = {"done": "False", "last": "0", "ok": "0",
+                 "nook": "0", "dimension": str(dimension)}
+        write_txt(new_folder_name + "/" + self.file_infos,
+                  get_dict_to_text(infos))
         write_txt(new_folder_name + "/" + self.file_ok, "")
         write_txt(new_folder_name + "/" + self.file_nook, "")
 
     def get_infos(self, dimension: int) -> Dict:
         folder_name = f"{self.folder_name}{"0" * (self.folder_num_len - len(str(dimension)))}{dimension}"
-        text = read_txt(self.save_path + "/" + folder_name + "/" + self.file_infos)
+        text = read_txt(self.save_path + "/" +
+                        folder_name + "/" + self.file_infos)
         infos = {}
         for line in text:
             key, value = line.split("=")
@@ -71,7 +74,8 @@ class SaveManager():
 
     def save_infos(self, dico: dict, dimension: int) -> None:
         text = get_dict_to_text(dico)
-        write_txt(self.save_path + "/" + self.get_folder_name(dimension) + "/" + self.file_infos, text)
+        write_txt(self.save_path + "/" +
+                  self.get_folder_name(dimension) + "/" + self.file_infos, text)
 
     def void(self, path: str) -> None:
         for dimension in self.dimensions:
@@ -87,7 +91,8 @@ class SaveManager():
         return path if extra is None else f"{path}/{extra}"
 
     def get_ok(self, dimension: int) -> List[str]:
-        file_name = self.save_path + "/" + self.get_folder_name(dimension) + "/" + self.file_ok
+        file_name = self.save_path + "/" + \
+            self.get_folder_name(dimension) + "/" + self.file_ok
         return read_txt(file_name)
 
     def save_ok(self, dimension: int, binary: str) -> None:

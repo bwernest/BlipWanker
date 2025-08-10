@@ -4,6 +4,7 @@
 from blipwanker.engine.data import Data
 from blipwanker.engine.simulation.simulation import JeuDeLaVie
 from blipwanker.test import *
+from blipwanker.toolbox import *
 
 # Python
 import numpy as np
@@ -37,7 +38,7 @@ class Test_Simulation():
             "-1492.1515": (-1492, 1515),
         }
         for key, value in quiz.items():
-            assertEqual(simu.get_coords(key), value)
+            assertEqual(get_coords(key), value)
 
     def test_get_key(self) -> None:
         simu = JeuDeLaVie()
@@ -98,7 +99,8 @@ class Test_Simulation():
         simu = JeuDeLaVie(Data.BAR())
         simu.next()
         simu.compact()
-        assertDictEqual(simu.grid.grid, {"0.-1": True, "0.0": True, "0.1": True})
+        assertDictEqual(simu.grid.grid, {
+                        "0.-1": True, "0.0": True, "0.1": True})
         simu.next()
         simu.compact()
         assertDictEqual(simu.grid.grid, Data.BAR())

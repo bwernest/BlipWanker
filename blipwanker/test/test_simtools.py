@@ -65,7 +65,8 @@ class Test_SimTools():
             "1001",
         ]
         expected = [True] * len(binaries)
-        result = [gen_fills_dim(binary, int(len(binaries[0])**0.5)) for binary in binaries]
+        result = [gen_fills_dim(binary, int(len(binaries[0])**0.5))
+                  for binary in binaries]
         assertListEqual(expected, result)
 
     def test_gen_fills_dim2(self) -> None:
@@ -77,7 +78,8 @@ class Test_SimTools():
             "100010100",
         ]
         expected = [True] * len(binaries)
-        result = [gen_fills_dim(binary, int(len(binaries[0])**0.5)) for binary in binaries]
+        result = [gen_fills_dim(binary, int(len(binaries[0])**0.5))
+                  for binary in binaries]
         assertListEqual(expected, result)
 
     def test_gen_fills_dim3(self) -> None:
@@ -88,7 +90,8 @@ class Test_SimTools():
             "000011011",
         ]
         expected = [False] * len(binaries)
-        result = [gen_fills_dim(binary, int(len(binaries[0])**0.5)) for binary in binaries]
+        result = [gen_fills_dim(binary, int(len(binaries[0])**0.5))
+                  for binary in binaries]
         assertListEqual(expected, result)
 
     def test_loop_fills_dim1(self) -> None:

@@ -62,15 +62,7 @@ class JeuDeLaVie():
 
     @property
     def bounds(self) -> dict:
-        bounds = {"x+": 0, "x-": 0, "y+": 0, "y-": 0}
-        for key, state in self.grid.items():
-            if state:
-                X, Y = self.get_coords(key)
-                bounds["x+"] = max(bounds["x+"], X)
-                bounds["x-"] = min(bounds["x-"], X)
-                bounds["y+"] = max(bounds["y+"], Y)
-                bounds["y-"] = min(bounds["y-"], Y)
-        return bounds
+        return get_bounds(self.grid.grid)
 
     def simulate(self, turn: int = 1, bar: bool = False):
         self.compact()
@@ -103,34 +95,19 @@ class JeuDeLaVie():
         self.generation += 1
 
     def update_life(self, key: str) -> bool:
-        coords = self.get_coords(key)
+        coords = get_coords(key)
         around = self.get_around(coords)
         alives = [self.grid[self.get_key(coords)] for coords in around]
         return True if alives.count(True) in [2, 3] else False
 
     def update_dead(self, key: str) -> bool:
-        coords = self.get_coords(key)
+        coords = get_coords(key)
         around = self.get_around(coords)
         alives = [self.grid[self.get_key(coords)] for coords in around]
         return True if alives.count(True) == 3 else False
 
     def get_matrix(self) -> np.ndarray:
-        minX, maxX, minY, maxY = 0, 0, 0, 0
-        for cell, state in self.grid.items():
-            if state:
-                coords = self.get_coords(cell)
-                minX = min(minX, coords[0])
-                maxX = max(maxX, coords[0])
-                minY = min(minY, coords[1])
-                maxY = max(maxY, coords[1])
-
-        grille = np.zeros(shape=(maxY - minY + 1, maxX - minX + 1), dtype=int)
-
-        for cell, state in self.grid.items():
-            if state:
-                coords = self.get_coords(cell)
-                grille[maxY - coords[1], coords[0] - minX] = 1
-        return grille
+        return game_save_to_matrix(self.grid.grid)
 
     def display(self) -> None:
         grille = self.get_matrix()
@@ -144,10 +121,6 @@ class JeuDeLaVie():
             if state:
                 compact_grid[cell] = True
         self.grid = deepcopy(compact_grid)
-
-    def get_coords(self, key: str) -> Tuple[int, int]:
-        coords = key.split(".")
-        return (eval(coords[0]), eval(coords[1]))
 
     def get_key(self, coords: Tuple[int, int]) -> str:
         return f"{coords[0]}.{coords[1]}"

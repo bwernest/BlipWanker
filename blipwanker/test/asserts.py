@@ -22,7 +22,8 @@ def assertFalse(arg1: bool) -> None:
     assert not arg1, f"C'est vrai."
 
 def assertIsInstance(arg1: any, _type: type) -> None:
-    assert isinstance(arg1, _type), f"Argument est de type {type(arg1)} et non de type {_type}"
+    assert isinstance(
+        arg1, _type), f"Argument est de type {type(arg1)} et non de type {_type}"
 
 def assertListEqual(arg1: any, arg2: any) -> None:
     for elem1, elem2 in zip(arg1, arg2):
@@ -30,7 +31,8 @@ def assertListEqual(arg1: any, arg2: any) -> None:
 
 def assertDictEqual(arg1: dict, arg2: dict) -> None:
     len1, len2 = len(list(arg1.keys())), len(list(arg2.keys()))
-    assertEqual(len1, len2, f"Longeurs de dictionnaires différentes ! {len1} / {len2}")
+    assertEqual(
+        len1, len2, f"Longeurs de dictionnaires différentes ! {len1} / {len2}")
     for key, value in arg1.items():
         assertEqual(arg1[key], arg2[key])
 

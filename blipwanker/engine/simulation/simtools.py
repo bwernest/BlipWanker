@@ -11,7 +11,7 @@ import numpy as np
 from tqdm import tqdm
 from typing import Dict, List
 
-"""___Classes_______________________________________________________________"""
+"""___Functions_____________________________________________________________"""
 
 def loop_fills_dim(loop: List[str], dimension: int) -> bool:
     """
@@ -58,7 +58,8 @@ def get_loop(game_save: Dict) -> List[str]:
                 return generations[g:], loop_dimension
         generations.append(binary)
         if simulator.generation > 1000:
-            raise TooMuchIteration("Impossible de déterminer une loop pour cette save.")
+            raise TooMuchIteration(
+                "Impossible de déterminer une loop pour cette save.")
         if simulator.is_dead:
             raise SimulationDead("Plus aucune cellule restante !")
 
@@ -83,7 +84,8 @@ def screen_generations(game_save: dict, start: int = 0, end: int = None, duratio
         bounds = simulator.bounds
         all_bounds.append(bounds)
         for key, value in max_bounds.items():
-            max_bounds[key] = max(value, bounds[key]) if key.endswith("+") else min(value, bounds[key])
+            max_bounds[key] = max(value, bounds[key]) if key.endswith(
+                "+") else min(value, bounds[key])
 
     for g, matrix in enumerate(generations):
         generations[g] = extend_matrix(
