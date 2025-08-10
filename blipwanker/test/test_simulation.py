@@ -149,11 +149,11 @@ class Test_Simulation():
         expected = "0110"
         grid = {"0.0": True, "1.1": True}
         game = JeuDeLaVie(grid)
-        result = game.get_save("binary")
+        result = game.get_save("binary")[0]
         assertEqual(expected, result)
 
     def test_get_save_binary2(self) -> None:
         expected = "000000111"
         game = JeuDeLaVie(Data.BAR())
-        result = game.get_save("binary")
+        result = game.get_save("binary")[0]
         assertEqual(expected, result)

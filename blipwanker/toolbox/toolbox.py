@@ -80,6 +80,9 @@ def extend_matrix(matrix: np.ndarray, up: int = 0, down: int = 0, left: int = 0,
     return matrix
 
 def matrix_to_binary(matrix: np.ndarray) -> Tuple[str, int]:
+    """
+    A partir de matrix, exporte un binary ainsi que la dimension de matrix.
+    """
     matrix = get_square_matrix(matrix)
     binary_g = ""
     for line in matrix:

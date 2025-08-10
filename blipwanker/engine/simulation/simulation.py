@@ -46,6 +46,16 @@ class JeuDeLaVie():
         return list(self.grid.values()).count(True)
 
     @property
+    def is_alive(self) -> bool:
+        for state in self.grid.values():
+            if state: return True
+        return False
+
+    @property
+    def is_dead(self) -> bool:
+        return not self.is_alive
+
+    @property
     def dead_cells(self) -> int:
         return list(self.grid.values()).count(False)
 
@@ -163,5 +173,5 @@ class JeuDeLaVie():
     def get_save_dict(self) -> dict:
         return self.grid.grid
 
-    def get_save_binary(self) -> str:
-        return matrix_to_binary(self.get_matrix())[0]
+    def get_save_binary(self) -> Tuple[str, int]:
+        return matrix_to_binary(self.get_matrix())

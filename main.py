@@ -12,10 +12,20 @@ import numpy as np
 
 """___Execution_____________________________________________________________"""
 
-dimension = 400
-matrix = np.random.randint(0, 2, size=(dimension, dimension), dtype=int)
-binary, _ = matrix_to_binary(matrix)
-game_save = binary_to_game_save(binary, dimension)
+# dimension = 400
+# matrix = np.random.randint(0, 2, size=(dimension, dimension), dtype=int)
+# binary, _ = matrix_to_binary(matrix)
+# game_save = binary_to_game_save(binary, dimension)
 
-# generate_gif(game_save, 100)
-generate_gif(Data.TOIT(), 200, bar=True)
+# # generate_gif(game_save, 100)
+# generate_gif(Data.TOIT(), 200, bar=True)
+
+binaries = [
+    "100000000",
+    "010110000",
+    "000010000",
+    "000011011",
+]
+expected = [False]*len(binaries)
+result = [gen_fills_dim(binary, int(len(binaries[0])**0.5)) for binary in binaries]
+assertListEqual(expected, result)

@@ -13,10 +13,23 @@ from typing import Dict, List
 
 """___Classes_______________________________________________________________"""
 
-def fills_dim(binary_c: str, dimension: int) -> bool:
+def loop_fills_dim(loop: List[str], dimension: int) -> bool:
     """
     Vérifie que le binary utilise tout l'espace
     """
+    for generation in loop:
+        if gen_fills_dim(generation, dimension):
+            return True
+    return False
+
+def gen_fills_dim(binary_g: str, dimension: int) -> bool:
+    # Verticalement
+    if int(binary_g[:dimension], 10) * int(binary_g[-dimension:], 10) > 0:
+        return True
+    # Horizontalement
+    if int(binary_g[::dimension], 10) * int(binary_g[dimension-1::dimension], 10) > 0:
+        return True
+    return False
 
 def get_signature(binary_c: str, dimension: int) -> str:
     """
@@ -27,21 +40,25 @@ def get_signature(binary_c: str, dimension: int) -> str:
     et comparer des formes de vies mêmes déphasées.
     """
     game_save = binary_to_game_save(binary_c, dimension)
-    loop = get_loop(game_save)
+    loop, loop_dimension = get_loop(game_save)
+    if loop_dimension < dimension:
+        return False
 
 def get_loop(game_save: Dict) -> List[str]:
     simulator = JeuDeLaVie(game_save)
-    generations = [simulator.get_save("binary")]
+    generation, loop_dimension = simulator.get_save("binary")
+    generations = [generation]
 
     while True:
         simulator.next()
-        binary = simulator.get_save("binary")
+        binary, dimension = simulator.get_save("binary")
+        loop_dimension = max(loop_dimension, dimension)
         for g, generation in enumerate(generations):
             if binary == generation:
-                return generations[g:]
+                return generations[g:], loop_dimension
         generations.append(binary)
-        if simulator.generation > 1000:
-            raise TooMuchIteration("Impossible de déterminer une loop pour cette save.")
+        if simulator.generation > 1000: raise TooMuchIteration("Impossible de déterminer une loop pour cette save.")
+        if simulator.is_dead: raise SimulationDead("Plus aucune cellule restante !")
 
 def screen_generations(game_save: dict, start: int = 0, end: int = None, duration: int = 10, bar: bool = False) -> List[np.ndarray]:
     """
