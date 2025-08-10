@@ -67,13 +67,17 @@ class Researcher(SaveManager, Analysor):
     def simulation_succeed(self, binary_g: str) -> None:
         binary_c = get_compact_binary(binary_g)
         self.ok_list.append(binary_c)
-        equivalents += get_equivalents(binary_g)
+        self.save_ok(self.dimension, binary_c)
+        equivalents += get_equivalents(binary_g, self.dimension)
         self.nook_list += equivalents
         self.nook += len(equivalents)
+        self.save_nook(self.dimension, equivalents)
 
     def simulation_failed(self, binary_g: str) -> None:
-        self.nook_list += get_equivalents(binary_g)
+        equivalents = get_equivalents(binary_g, self.dimension)
+        self.nook_list += equivalents
         self.nook += 1
+        self.save_nook(self.dimension, equivalents)
 
     def simulation(self, game_grid: dict) -> bool:
         game = JeuDeLaVie(game_grid)

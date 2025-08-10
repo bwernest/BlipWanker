@@ -107,12 +107,15 @@ class SaveManager():
             self.get_folder_name(dimension) + "/" + self.file_nook
         return read_txt(file_name)
 
-    def save_nook(self, dimension: int, binary: str) -> None:
+    def save_nook(self, dimension: int, binaries: List[str]) -> None:
         """
         Ajoute le binary entré à la save.
         """
         file_name = self.get_path(dimension, self.file_nook)
-        write_txt(file_name, f"{binary}\n", method="a")
+        text = ""
+        for binary in binaries:
+            text += f"{binary}\n"
+        write_txt(file_name, text, method="a")
 
     def get_folder_name(self, dimension: int) -> str:
         return self.folder_name + "0" * (self.folder_num_len - len(str(dimension))) + str(dimension)
