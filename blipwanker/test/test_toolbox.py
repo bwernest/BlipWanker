@@ -8,26 +8,6 @@ from blipwanker.test import *
 
 class Test_Toolbox():
 
-    def test_binary_usefull1(self) -> None:
-        binary = "1001"
-        dimension = 2
-        assertTrue(binary_usefull(binary, dimension))
-
-    def test_binary_usefull2(self) -> None:
-        binary = "1000"
-        dimension = 2
-        assertFalse(binary_usefull(binary, dimension))
-
-    def test_binary_usefull3(self) -> None:
-        binary = "100000001"
-        dimension = 3
-        assertTrue(binary_usefull(binary, dimension))
-
-    def test_binary_usefull4(self) -> None:
-        binary = "100010000"
-        dimension = 3
-        assertFalse(binary_usefull(binary, dimension))
-
     def test_get_compact_binary1(self) -> None:
         binary_g = "0001"
         result = get_compact_binary(binary_g)

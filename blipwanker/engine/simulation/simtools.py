@@ -22,15 +22,6 @@ def loop_fills_dim(loop: List[str], dimension: int) -> bool:
             return True
     return False
 
-def gen_fills_dim(binary_g: str, dimension: int) -> bool:
-    # Verticalement
-    if int(binary_g[:dimension], 10) * int(binary_g[-dimension:], 10) > 0:
-        return True
-    # Horizontalement
-    if int(binary_g[::dimension], 10) * int(binary_g[dimension - 1::dimension], 10) > 0:
-        return True
-    return False
-
 def get_signature(binary_c: str, dimension: int) -> str:
     """
     Identifie la signature d'un binary. Les binaries traités ici survivent à X générations.

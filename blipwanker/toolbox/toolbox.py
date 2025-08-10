@@ -72,19 +72,6 @@ def get_coords(key: str) -> Tuple[int, int]:
     coords = key.split(".")
     return (eval(coords[0]), eval(coords[1]))
 
-def binary_usefull(binary: str, dimension: int) -> bool:
-    """
-    A optimiser
-    """
-    matrix = np.zeros(shape=(dimension**2))
-    for c, charac in enumerate(binary):
-        matrix[c] = eval(charac)
-    matrix = np.reshape(matrix, (dimension, dimension))
-    if np.sum(matrix[0, :]) > 0 and np.sum(matrix[-1, :]) > 0 or np.sum(matrix[:, 0]) > 0 and np.sum(matrix[:, -1]):
-        return True
-    else:
-        return False
-
 def get_grid_binary(binary: str, dimension: int) -> str:
     return "0" * (dimension**2 - len(binary)) + binary
 
@@ -111,3 +98,12 @@ def get_bounds(game_save: dict) -> dict:
             bounds["y+"] = max(bounds["y+"], Y)
             bounds["y-"] = min(bounds["y-"], Y)
     return bounds
+
+def gen_fills_dim(binary_g: str, dimension: int) -> bool:
+    # Verticalement
+    if int(binary_g[:dimension], 10) * int(binary_g[-dimension:], 10) > 0:
+        return True
+    # Horizontalement
+    if int(binary_g[::dimension], 10) * int(binary_g[dimension - 1::dimension], 10) > 0:
+        return True
+    return False

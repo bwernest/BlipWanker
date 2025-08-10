@@ -29,6 +29,7 @@ class Researcher(SaveManager, Analysor):
             self.__setattr__(element, eval(infos[element]))
         self.done = infos["done"]
         self.ok_list = self.get_ok(self.dimension)
+        self.nook_list = self.get_nook(self.dimension)
 
     def export_infos(self) -> None:
         infos = {element: str(self.__getattribute__(element))
@@ -41,20 +42,24 @@ class Researcher(SaveManager, Analysor):
         print(f"Démarrage recherche de {self.last} à {final}")
         for k in tqdm(range(self.last, final), disable=not bar):
             self.last += 1
-
-            # Binary treatment
             binary_c = np.binary_repr(k)
+
+            # ___Entry_filters___
+            # Known nook binary
+            if binary_c in self.nook_list:
+                continue
+            # Unfilled dimension
             binary_g = get_grid_binary(binary_c, self.dimension)
-            if not binary_usefull(binary_g, self.dimension):
+            if not gen_fills_dim(binary_g, self.dimension):
                 self.nook += 1
                 continue
 
-            # SImulation
+            # Simulation
             game_grid = binary_to_game_save(binary_g, self.dimension)
             if self.simulation(game_grid):
                 self.simulation_succeed(binary_g)
             else:
-                self.simulation_failed()
+                self.simulation_failed(binary_g)
 
         self.done = True
         self.export_infos()
@@ -62,12 +67,12 @@ class Researcher(SaveManager, Analysor):
     def simulation_succeed(self, binary_g: str) -> None:
         binary_c = get_compact_binary(binary_g)
         self.ok_list.append(binary_c)
-        if self.analyse(binary_c, self.dimension, self.ok_list):
-            self.ok += 1
-            self.save_ok(self.dimension, binary_c)
-            self.export_infos()
+        equivalents += get_equivalents(binary_g)
+        self.nook_list += equivalents
+        self.nook += len(equivalents)
 
-    def simulation_failed(self) -> None:
+    def simulation_failed(self, binary_g: str) -> None:
+        self.nook_list += get_equivalents(binary_g)
         self.nook += 1
 
     def simulation(self, game_grid: dict) -> bool:
