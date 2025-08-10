@@ -27,7 +27,7 @@ def gen_fills_dim(binary_g: str, dimension: int) -> bool:
     if int(binary_g[:dimension], 10) * int(binary_g[-dimension:], 10) > 0:
         return True
     # Horizontalement
-    if int(binary_g[::dimension], 10) * int(binary_g[dimension-1::dimension], 10) > 0:
+    if int(binary_g[::dimension], 10) * int(binary_g[dimension - 1::dimension], 10) > 0:
         return True
     return False
 
@@ -57,8 +57,10 @@ def get_loop(game_save: Dict) -> List[str]:
             if binary == generation:
                 return generations[g:], loop_dimension
         generations.append(binary)
-        if simulator.generation > 1000: raise TooMuchIteration("Impossible de déterminer une loop pour cette save.")
-        if simulator.is_dead: raise SimulationDead("Plus aucune cellule restante !")
+        if simulator.generation > 1000:
+            raise TooMuchIteration("Impossible de déterminer une loop pour cette save.")
+        if simulator.is_dead:
+            raise SimulationDead("Plus aucune cellule restante !")
 
 def screen_generations(game_save: dict, start: int = 0, end: int = None, duration: int = 10, bar: bool = False) -> List[np.ndarray]:
     """

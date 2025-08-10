@@ -48,7 +48,8 @@ class JeuDeLaVie():
     @property
     def is_alive(self) -> bool:
         for state in self.grid.values():
-            if state: return True
+            if state:
+                return True
         return False
 
     @property

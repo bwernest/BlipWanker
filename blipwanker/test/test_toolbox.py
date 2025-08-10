@@ -73,12 +73,6 @@ class Test_Toolbox():
         result = [to_base10(number) for number in numbers]
         assertListEqual(expected, result)
 
-    def test_super_eval(self) -> None:
-        numbers = ["0", "01", "26", "0.89", "01492.15150"]
-        expected = [0, 1, 26, 0.89, 1492.1515]
-        result = [super_eval(number) for number in numbers]
-        assertListEqual(expected, result)
-
     def test_get_dict_to_text(self) -> None:
         dico = {"mdr": 5, 26: "lol"}
         expected = "mdr=5\n26=lol"

@@ -31,7 +31,7 @@ class SaveManager():
         dimensions_folders = os.listdir(self.save_path)
         self.dimensions: List[int] = []
         for folder in dimensions_folders:
-            self.dimensions.append(super_eval(folder[-self.folder_num_len:]))
+            self.dimensions.append(int(folder[-self.folder_num_len:], 10))
 
     def get_next_dimension(self) -> dict:
         self.get_dimensions()

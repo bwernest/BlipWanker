@@ -12,11 +12,6 @@ def to_base10(number: str) -> int:
     else:
         return eval(number[0]) * 2**(len(number) - 1) + to_base10(number[1:])
 
-def super_eval(number: str) -> int:
-    while number.startswith("0"):
-        number = number[1:]
-    return 0 if number == "" else eval(number)
-
 def print_info(text: str, objet: any) -> None:
     render = f"{text} {type(objet)} :"
     if isinstance(objet, (int, float, str)):

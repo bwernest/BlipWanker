@@ -64,7 +64,7 @@ class Test_SimTools():
             "1010",
             "1001",
         ]
-        expected = [True]*len(binaries)
+        expected = [True] * len(binaries)
         result = [gen_fills_dim(binary, int(len(binaries[0])**0.5)) for binary in binaries]
         assertListEqual(expected, result)
 
@@ -76,7 +76,7 @@ class Test_SimTools():
             "100000001",
             "100010100",
         ]
-        expected = [True]*len(binaries)
+        expected = [True] * len(binaries)
         result = [gen_fills_dim(binary, int(len(binaries[0])**0.5)) for binary in binaries]
         assertListEqual(expected, result)
 
@@ -87,7 +87,7 @@ class Test_SimTools():
             "000010000",
             "000011011",
         ]
-        expected = [False]*len(binaries)
+        expected = [False] * len(binaries)
         result = [gen_fills_dim(binary, int(len(binaries[0])**0.5)) for binary in binaries]
         assertListEqual(expected, result)
 
